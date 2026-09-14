@@ -69,9 +69,12 @@ class VLMClient:
             timeout=timeout or settings.vlm_timeout_sec,
         )
 
-    def caption(self, image: Image.Image | bytes | str | Path, prompt: str) -> str:
+    def caption(
+        self, image: Image.Image | bytes | str | Path, prompt: str, max_tokens: int | None = None
+    ) -> str:
         """이미지 한 장에 대한 텍스트 응답(캡션/답변)을 생성한다."""
         data_url = _image_to_data_url(image)
+        kwargs = {"max_tokens": max_tokens} if max_tokens else {}
         response = self._client.chat.completions.create(
             model=self.model,
             messages=[
@@ -85,6 +88,7 @@ class VLMClient:
             ],
             # Ollama 확장 파라미터: 컨텍스트 길이 제한 (D-02)
             extra_body={"options": {"num_ctx": self.num_ctx}},
+            **kwargs,
         )
         content = response.choices[0].message.content
         return content or ""

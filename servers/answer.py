@@ -31,7 +31,7 @@ def _build_context_text(chunks: list[RetrievedChunk], images_used: list[str]) ->
     """텍스트 경로 청크 + 이미지 상한 초과분(캡션)을 하나의 컨텍스트 문자열로 합친다."""
     parts = []
     for c in chunks:
-        if c.route == "image" and c.image_path in images_used:
+        if c.image_path and c.image_path in images_used:
             continue  # 원본 이미지로 직접 투입되므로 텍스트 컨텍스트에서 중복 제외
         parts.append(f"[출처: {c.source_file}]\n{c.text}")
     return "\n\n".join(parts)
@@ -44,8 +44,8 @@ def generate_from_chunks(query: str, chunks: list[RetrievedChunk], client: VLMCl
     if not chunks:
         return AnswerResult(answer="문서에서 찾을 수 없습니다.", sources=[], used_chunks=[])
 
-    # 이미지 경로 청크 중 상한만큼만 원본 이미지로 투입
-    image_chunks = [c for c in chunks if c.route == "image" and c.image_path]
+    # 원본 이미지가 있는 청크(IMAGE·OCR 경로) 중 상한만큼만 이미지로 투입 (D-02, D-04)
+    image_chunks = [c for c in chunks if c.image_path]
     images_to_send = [c.image_path for c in image_chunks[: settings.answer_image_cap]]
 
     context_text = _build_context_text(chunks, images_to_send)

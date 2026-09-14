@@ -34,9 +34,16 @@ class Settings(BaseSettings):
     top_n_after_rerank: int = 5
     answer_image_cap: int = 2  # D-02: 4k 컨텍스트 제약으로 원본 이미지 최대 2장만 투입
 
-    # --- 라우팅 (Phase 1) ---
-    route_min_text_chars: int = 100
-    image_route_page_cap: int = 5000  # D-03: 이미지 경로 상한
+    # --- 라우팅 (Phase 1, D-04 4갈래) ---
+    route_min_text_chars: int = 100  # 이상이면 텍스트 경로
+    route_min_ocr_chars: int = 100  # 텍스트 빈약 + OCR 이상이면 OCR 경로 (VLM 생략)
+    blank_ink_threshold: float = 0.002  # 400px 썸네일에서 어두운 픽셀 비율 미만이면 백지
+    image_route_page_cap: int = 5000  # D-03: 이미지(VLM) 경로 상한
+
+    # --- 캡셔닝 (D-04) ---
+    caption_parallel: int = 4  # 실측: 4요청에서 장당 3.7초, 6요청 3.5초로 포화
+    caption_max_tokens: int = 400  # 549토큰 outlier(17.6초) 방지
+    caption_cache_path: Path = Path(__file__).resolve().parent / "data" / "captions.jsonl"
 
     # --- 저장소 ---
     project_root: Path = Path(__file__).resolve().parent

@@ -10,19 +10,26 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import chromadb
+from PIL import Image
 from sentence_transformers import SentenceTransformer
 
 from config import settings
 from indexing.ingest import Route, RoutedPage
+
+# 답변 단계에서 원본 페이지 이미지를 다시 VLM에 넣는 경로. 원본 이미지를 디스크에 남긴다.
+IMAGE_BACKED_ROUTES = {Route.IMAGE.value, Route.OCR.value}
+
+# 저장 해상도. VLM 입력이 1280px로 축소되므로 그 이상은 디스크만 차지한다.
+SAVED_IMAGE_MAX_SIDE_PX = 1280
 
 
 @dataclass
 class IndexedChunk:
     page_id: str
     route: str
-    text_for_embedding: str  # 텍스트 경로: 본문 / 이미지 경로: 캡션
+    text_for_embedding: str  # TEXT: 본문 / OCR: OCR 텍스트 / IMAGE: 캡션
     source_file: str
-    image_path: str | None  # 이미지 경로 페이지만 채워짐 (답변 단계에서 원본 이미지 재사용)
+    image_path: str | None  # IMAGE·OCR 경로만 채워짐
 
 
 _embedder_cache: dict[str, SentenceTransformer] = {}
@@ -35,28 +42,55 @@ def get_embedder(device: str) -> SentenceTransformer:
 
 
 def source_file_from_page_id(page_id: str) -> str:
-    """'public_pdf/prism/파일명_페이지번호' 형태의 id에서 파일명 부분을 추출한다."""
-    # 마지막 '_' 뒤가 페이지 인덱스인 경우가 많으나, 파일명 자체에 '_'가 많아
-    # 안전하게 전체 id를 source_file로 쓰고, 별도 page_no는 메타데이터로 남기지 않는다
-    # (SDS KoPub는 annotations.parquet의 page_indices로 페이지-문서 매핑을 제공하므로
-    #  향후 정확한 매핑이 필요하면 annotations를 조인한다).
+    """SDS KoPub의 id는 '경로/파일명_페이지' 형태다. 정확한 문서 매핑은 annotations.parquet 조인으로."""
     return page_id
 
 
+def _safe_name(page_id: str) -> str:
+    return "".join(c if c.isalnum() else "_" for c in page_id)[:150]
+
+
+def image_path_for(page_id: str) -> str:
+    return str(settings.rendered_pages_dir / f"{_safe_name(page_id)}.png")
+
+
+def save_page_image(page_id: str, image: Image.Image) -> str:
+    """원본 페이지 이미지를 긴 변 1280px로 줄여 디스크에 저장하고 경로를 반환한다. 이미 있으면 건너뛴다."""
+    settings.rendered_pages_dir.mkdir(parents=True, exist_ok=True)
+    path = settings.rendered_pages_dir / f"{_safe_name(page_id)}.png"
+    if path.exists():
+        return str(path)
+    w, h = image.size
+    longest = max(w, h)
+    if longest > SAVED_IMAGE_MAX_SIDE_PX:
+        scale = SAVED_IMAGE_MAX_SIDE_PX / longest
+        image = image.resize((max(1, round(w * scale)), max(1, round(h * scale))), Image.LANCZOS)
+    if image.mode not in ("RGB", "L"):
+        image = image.convert("RGB")
+    image.save(path, format="PNG")
+    return str(path)
+
+
 def build_chunks(routed_pages: list[RoutedPage], captions: dict[str, str]) -> list[IndexedChunk]:
-    """라우팅 결과 + 캡션 결과를 임베딩 대상 청크로 변환한다."""
+    """라우팅 결과 + 캡션 결과를 임베딩 대상 청크로 변환한다. BLANK는 제외."""
     chunks: list[IndexedChunk] = []
     for rp in routed_pages:
         page = rp.page
-        if rp.route == Route.TEXT:
+        route = rp.route
+
+        if route == Route.BLANK:
+            continue
+        if route == Route.TEXT:
             text_for_embedding = page.text
-            image_path = None
-        elif rp.route == Route.IMAGE:
+        elif route == Route.OCR:
+            text_for_embedding = page.ocr
+        elif route == Route.IMAGE:
             text_for_embedding = captions.get(page.id, "")
-            image_path = str(settings.rendered_pages_dir / f"{_safe_name(page.id)}.png")
-        else:  # IMAGE_OVERFLOW: 상한 초과 -> OCR로 대체, 원본 이미지는 저장하지 않음
+            if not text_for_embedding.strip():
+                # 캡션 실패 페이지는 OCR/텍스트로 대체해 누락시키지 않는다
+                text_for_embedding = page.ocr or page.text
+        else:  # IMAGE_OVERFLOW
             text_for_embedding = page.ocr or page.text
-            image_path = None
 
         if not text_for_embedding.strip():
             continue
@@ -64,27 +98,13 @@ def build_chunks(routed_pages: list[RoutedPage], captions: dict[str, str]) -> li
         chunks.append(
             IndexedChunk(
                 page_id=page.id,
-                route=rp.route.value,
+                route=route.value,
                 text_for_embedding=text_for_embedding,
                 source_file=source_file_from_page_id(page.id),
-                image_path=image_path,
+                image_path=image_path_for(page.id) if route.value in IMAGE_BACKED_ROUTES else None,
             )
         )
     return chunks
-
-
-def _safe_name(page_id: str) -> str:
-    return "".join(c if c.isalnum() else "_" for c in page_id)[:150]
-
-
-def save_page_image(page_id: str, image) -> str:
-    """이미지 경로 페이지의 원본 이미지를 디스크에 저장하고 경로를 반환한다."""
-    settings.rendered_pages_dir.mkdir(parents=True, exist_ok=True)
-    path = settings.rendered_pages_dir / f"{_safe_name(page_id)}.png"
-    if image.mode not in ("RGB", "L"):
-        image = image.convert("RGB")
-    image.save(path, format="PNG")
-    return str(path)
 
 
 def get_collection():
@@ -92,7 +112,7 @@ def get_collection():
     return client.get_or_create_collection(settings.collection_name)
 
 
-def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int = 64) -> int:
+def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int = 64, progress: bool = True) -> int:
     """청크를 임베딩하여 ChromaDB에 저장한다. 저장된 청크 수를 반환한다."""
     if not chunks:
         return 0
@@ -100,8 +120,14 @@ def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int = 6
     embedder = get_embedder(device)
     collection = get_collection()
 
+    rng = range(0, len(chunks), batch_size)
+    if progress:
+        from tqdm import tqdm
+
+        rng = tqdm(rng, desc="embedding", unit="batch")
+
     stored = 0
-    for i in range(0, len(chunks), batch_size):
+    for i in rng:
         batch = chunks[i : i + batch_size]
         texts = [c.text_for_embedding for c in batch]
         vectors = embedder.encode(texts, normalize_embeddings=True, show_progress_bar=False)
