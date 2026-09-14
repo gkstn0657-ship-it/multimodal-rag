@@ -1,6 +1,7 @@
-"""검색: BGE-M3 임베딩 → ChromaDB top-k → bge-reranker-v2-m3 재랭킹 → top-n.
+"""검색: BGE-M3 임베딩 → 로컬 벡터 스토어 top-k(브루트포스) → bge-reranker-v2-m3 재랭킹 → top-n.
 
 D-02: 서빙 시점에는 VLM이 GPU를 점유하므로 임베더/리랭커는 CPU에서 돈다.
+D-06: ChromaDB 대신 indexing.vector_store.VectorStore를 쓴다(배경은 그 모듈 참고).
 search()/rerank()로 단계를 분리해 metrics.py에서 단계별 시간을 잴 수 있게 한다.
 """
 
@@ -11,7 +12,7 @@ from dataclasses import dataclass
 from sentence_transformers import CrossEncoder
 
 from config import settings
-from indexing.embed_store import get_collection, get_embedder
+from indexing.embed_store import get_embedder, get_store
 
 
 @dataclass
@@ -43,30 +44,26 @@ def get_reranker(device: str) -> CrossEncoder:
 
 
 def search(query: str, device: str | None = None) -> list[Candidate]:
-    """임베딩 + ChromaDB top-k 검색 (재랭킹 이전 단계)."""
+    """임베딩 + 로컬 벡터 스토어 top-k 검색 (재랭킹 이전 단계)."""
     dev = device or settings.embed_device_serving
     embedder = get_embedder(dev)
-    query_vec = embedder.encode([query], normalize_embeddings=True)[0].tolist()
+    query_vec = embedder.encode([query], normalize_embeddings=True)[0]
 
-    collection = get_collection()
-    result = collection.query(query_embeddings=[query_vec], n_results=settings.top_k_candidates)
+    store = get_store()
+    result = store.query(query_vec, n_results=settings.top_k_candidates)
 
-    if not result["ids"] or not result["ids"][0]:
+    if not result.ids:
         return []
-
-    ids = result["ids"][0]
-    documents = result["documents"][0]
-    metadatas = result["metadatas"][0]
 
     return [
         Candidate(
-            page_id=ids[i],
-            text=documents[i],
-            route=metadatas[i].get("route", ""),
-            source_file=metadatas[i].get("source_file", ""),
-            image_path=metadatas[i].get("image_path") or None,
+            page_id=result.ids[i],
+            text=result.documents[i],
+            route=result.metadatas[i].get("route", ""),
+            source_file=result.metadatas[i].get("source_file", ""),
+            image_path=result.metadatas[i].get("image_path") or None,
         )
-        for i in range(len(ids))
+        for i in range(len(result.ids))
     ]
 
 

@@ -12,7 +12,6 @@ dependencies = [
     "pyarrow>=17",
     "torch>=2.6",
     "sentence-transformers>=3.3",
-    "chromadb>=0.6",
     "fastapi>=0.115",
     "uvicorn>=0.30",
     "pydantic>=2.7",

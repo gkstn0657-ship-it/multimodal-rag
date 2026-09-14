@@ -1,21 +1,24 @@
-"""BGE-M3 임베딩 + ChromaDB 저장.
+"""BGE-M3 임베딩 + 로컬 벡터 저장소 저장 (D-06).
 
 D-02에 따라 device는 호출자가 명시한다:
   - 인덱싱 스크립트(run_index.py)는 VLM을 내린 뒤 embed_device_indexing(cuda)로 호출
   - 서빙 코드(retrieve.py)는 embed_device_serving(cpu)로 호출
+
+D-06: ChromaDB 대신 indexing.vector_store.VectorStore(브루트포스 numpy)를 쓴다.
+배경은 vector_store.py 모듈 docstring 참고.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-import chromadb
 import torch
 from PIL import Image
 from sentence_transformers import SentenceTransformer
 
 from config import settings
 from indexing.ingest import Route, RoutedPage
+from indexing.vector_store import VectorStore
 
 # 답변 단계에서 원본 페이지 이미지를 다시 VLM에 넣는 경로. 원본 이미지를 디스크에 남긴다.
 IMAGE_BACKED_ROUTES = {Route.IMAGE.value, Route.OCR.value}
@@ -114,19 +117,29 @@ def build_chunks(routed_pages: list[RoutedPage], captions: dict[str, str]) -> li
     return chunks
 
 
-def get_collection():
-    client = chromadb.PersistentClient(path=str(settings.chroma_dir))
-    return client.get_or_create_collection(settings.collection_name)
+_store_cache: VectorStore | None = None
+
+
+def get_store(force_reload: bool = False) -> VectorStore:
+    """저장된 벡터 스토어를 로드한다 (서빙 시 프로세스 내 캐시)."""
+    global _store_cache
+    if _store_cache is None or force_reload:
+        _store_cache = VectorStore.load(settings.vector_store_dir)
+    return _store_cache
 
 
 def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int | None = None, progress: bool = True) -> int:
-    """청크를 임베딩하여 ChromaDB에 저장한다. 저장된 청크 수를 반환한다."""
+    """청크를 임베딩하여 로컬 벡터 스토어에 저장한다. 저장된 청크 수를 반환한다.
+
+    모든 배치를 메모리에 누적한 뒤 마지막에 한 번만 디스크에 쓴다(VectorStore.save).
+    ChromaDB의 배치별 증분 쓰기와 달리 부분적으로 쓰인 상태가 남을 여지가 없다.
+    """
     if not chunks:
         return 0
 
     batch_size = batch_size or settings.embed_batch_size
     embedder = get_embedder(device)
-    collection = get_collection()
+    store = VectorStore()
 
     rng = range(0, len(chunks), batch_size)
     if progress:
@@ -140,9 +153,9 @@ def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int | N
         texts = [c.text_for_embedding for c in batch]
         vectors = embedder.encode(texts, normalize_embeddings=True, show_progress_bar=False)
 
-        collection.upsert(
+        store.add(
             ids=[c.page_id for c in batch],
-            embeddings=vectors.tolist(),
+            vectors=vectors,
             documents=texts,
             metadatas=[
                 {
@@ -155,4 +168,5 @@ def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int | N
         )
         stored += len(batch)
 
+    store.save(settings.vector_store_dir)
     return stored

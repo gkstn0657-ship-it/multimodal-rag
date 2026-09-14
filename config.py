@@ -54,13 +54,11 @@ class Settings(BaseSettings):
     # --- 저장소 ---
     project_root: Path = Path(__file__).resolve().parent
     data_dir: Path = project_root / "data"
-    chroma_dir: Path = project_root / "data" / "chroma"
+    vector_store_dir: Path = project_root / "data" / "vector_store"  # D-06: 로컬 브루트포스 벡터 저장소
     corpus_parquet: Path = project_root / "data" / "sds_kopub_vdr" / "SDS-KoPub-corpus.parquet"
     qa_parquet: Path = project_root / "data" / "sds_kopub_vdr" / "SDS-KoPub-QA.parquet"
     annotations_parquet: Path = project_root / "data" / "sds_kopub_vdr" / "SDS-KoPub-annotations.parquet"
     rendered_pages_dir: Path = project_root / "data" / "rendered_pages"
-
-    collection_name: str = "multimodal_rag_pages"
 
 
 settings = Settings()
