@@ -1,4 +1,5 @@
 @echo off
+@chcp 65001 >nul
 rem Commit and push only when the working tree has changes. Never creates empty commits.
 setlocal
 cd /d "%~dp0.."
