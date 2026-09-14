@@ -34,3 +34,6 @@ Thumbs.db
 *.log
 logs/
 scripts/daily_commit.log
+
+# Test cache
+.pytest_cache/
