@@ -29,6 +29,12 @@ class Settings(BaseSettings):
     embed_device_indexing: str = "cuda"  # 인덱싱 시점: VLM을 내린 뒤 GPU 사용
     embed_device_serving: str = "cpu"  # 서빙 시점: VLM이 GPU를 점유하므로 CPU
 
+    # BGE-M3 기본 max_seq_length=8192. 코퍼스 텍스트는 p99=2,747자(~700토큰)라
+    # 배치 안에 긴 텍스트 하나만 있어도 전체 배치가 그 길이까지 패딩되어
+    # 실측 GPU 100%인데도 배치(64건)당 7~8초로 나왔다(D-05). 1024토큰으로 제한.
+    embed_max_seq_length: int = 1024
+    embed_batch_size: int = 128
+
     # --- 검색 파라미터 ---
     top_k_candidates: int = 10
     top_n_after_rerank: int = 5

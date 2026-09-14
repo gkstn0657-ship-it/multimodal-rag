@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import chromadb
+import torch
 from PIL import Image
 from sentence_transformers import SentenceTransformer
 
@@ -37,7 +38,13 @@ _embedder_cache: dict[str, SentenceTransformer] = {}
 
 def get_embedder(device: str) -> SentenceTransformer:
     if device not in _embedder_cache:
-        _embedder_cache[device] = SentenceTransformer(settings.embed_model_name, device=device)
+        kwargs = {}
+        if device == "cuda":
+            # D-05: fp16으로 배치당 GPU 연산량 절반, 품질 손실은 검색 용도에서 무시할 수준
+            kwargs["model_kwargs"] = {"torch_dtype": torch.float16}
+        model = SentenceTransformer(settings.embed_model_name, device=device, **kwargs)
+        model.max_seq_length = settings.embed_max_seq_length
+        _embedder_cache[device] = model
     return _embedder_cache[device]
 
 
@@ -112,11 +119,12 @@ def get_collection():
     return client.get_or_create_collection(settings.collection_name)
 
 
-def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int = 64, progress: bool = True) -> int:
+def embed_and_store(chunks: list[IndexedChunk], device: str, batch_size: int | None = None, progress: bool = True) -> int:
     """청크를 임베딩하여 ChromaDB에 저장한다. 저장된 청크 수를 반환한다."""
     if not chunks:
         return 0
 
+    batch_size = batch_size or settings.embed_batch_size
     embedder = get_embedder(device)
     collection = get_collection()
 
