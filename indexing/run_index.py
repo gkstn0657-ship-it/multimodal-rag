@@ -113,7 +113,13 @@ def run(limit: int | None, skip_embed: bool = False) -> None:
                 rp.page.image_bytes = None
         chunks = build_chunks(routed, cache.as_dict())
         stored = embed_and_store(chunks, device=settings.embed_device_indexing)
-        print(f"  저장 완료: {stored}건", flush=True)
+        # D-06: PersistentClient(rust 백엔드)는 마지막 배치의 HNSW 인덱스를 백그라운드
+        # 컴팩션 스레드가 처리하기 전에 프로세스가 끝나면 인덱스 파일이 디스크에
+        # 남지 않는다(재실행 시 "Error loading hnsw index"). close()로 명시적으로 플러시한다.
+        import chromadb
+
+        chromadb.PersistentClient(path=str(settings.chroma_dir)).close()
+        print(f"  저장 완료: {stored}건 (인덱스 플러시 완료)", flush=True)
     else:
         print("[3/3] 임베딩 생략 (--skip-embed)", flush=True)
 
