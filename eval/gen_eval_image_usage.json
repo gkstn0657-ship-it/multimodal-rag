@@ -1,0 +1,197 @@
+[
+  {
+    "idx": 1,
+    "type": "visual",
+    "images_sent": 1,
+    "routes_top5": [
+      "image",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 2,
+    "type": "text",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 3,
+    "type": "text",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 4,
+    "type": "text",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": null
+  },
+  {
+    "idx": 5,
+    "type": "text",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 5
+  },
+  {
+    "idx": 6,
+    "type": "text",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 7,
+    "type": "cross",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": null
+  },
+  {
+    "idx": 8,
+    "type": "cross",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 9,
+    "type": "cross",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 10,
+    "type": "cross",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 11,
+    "type": "cross",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 12,
+    "type": "visual",
+    "images_sent": 1,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "ocr"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 13,
+    "type": "visual",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 14,
+    "type": "visual",
+    "images_sent": 0,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "text"
+    ],
+    "gold_rank_top5": 1
+  },
+  {
+    "idx": 15,
+    "type": "visual",
+    "images_sent": 1,
+    "routes_top5": [
+      "text",
+      "text",
+      "text",
+      "text",
+      "ocr"
+    ],
+    "gold_rank_top5": 1
+  }
+]
