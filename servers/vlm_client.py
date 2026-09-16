@@ -8,12 +8,16 @@ from __future__ import annotations
 
 import base64
 import io
+import logging
+import subprocess
 from pathlib import Path
 
 from openai import OpenAI
 from PIL import Image
 
 from config import settings
+
+logger = logging.getLogger(__name__)
 
 # D-02 보완: 코퍼스 페이지 이미지는 약 300DPI(2480x3505)로, 원본 그대로 넣으면
 # 비전 토큰이 4k 컨텍스트를 넘는다(실측 4,148 토큰 요청 -> 400 에러).
@@ -29,6 +33,21 @@ def _resize_for_vlm(image: Image.Image) -> Image.Image:
         return image
     scale = MAX_IMAGE_SIDE_PX / longest
     return image.resize((max(1, round(w * scale)), max(1, round(h * scale))), Image.LANCZOS)
+
+
+def looks_degenerate(text: str) -> bool:
+    """퇴행 출력 감지 (D-12). 같은 글자가 반복되거나 글자 종류가 극단적으로 적으면 True.
+
+    실측: Ollama의 qwen2.5vl 러너가 손상되면 어떤 입력에도 정확히 31개의 '@'만 출력했고,
+    `ollama stop` 후 재로드하면 정상으로 돌아왔다. 텍스트 전용 모델은 영향이 없었다.
+    """
+    s = text.strip()
+    if len(s) < 8:
+        return False
+    if len(set(s)) <= 2:
+        return True
+    top_char_ratio = max(s.count(c) for c in set(s)) / len(s)
+    return top_char_ratio > 0.8
 
 
 def _image_to_data_url(image: Image.Image | bytes | str | Path) -> str:
@@ -74,24 +93,48 @@ class VLMClient:
     ) -> str:
         """이미지 한 장에 대한 텍스트 응답(캡션/답변)을 생성한다."""
         data_url = _image_to_data_url(image)
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt},
+                    {"type": "image_url", "image_url": {"url": data_url}},
+                ],
+            }
+        ]
+        # Ollama 확장 파라미터: 컨텍스트 길이 제한 (D-02)
+        return self._chat(messages, {"num_ctx": self.num_ctx}, max_tokens)
+
+    def restart_model(self) -> None:
+        """Ollama에 모델 언로드를 요청한다. 다음 요청에서 새로 로드된다 (D-12 회복 절차)."""
+        try:
+            subprocess.run(["ollama", "stop", self.model], check=False, capture_output=True, timeout=30)
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            pass
+
+    def _chat(self, messages: list[dict], options: dict, max_tokens: int | None) -> str:
+        """채팅 호출 + 퇴행 출력 감지·회복 (D-12).
+
+        퇴행이 감지되면 모델을 재시작하고 한 번 더 시도한다. 두 번째도 퇴행이면
+        빈 문자열이 아니라 예외를 던져 호출자(API는 503)가 알 수 있게 한다.
+        """
         kwargs = {"max_tokens": max_tokens} if max_tokens else {}
-        response = self._client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": prompt},
-                        {"type": "image_url", "image_url": {"url": data_url}},
-                    ],
-                }
-            ],
-            # Ollama 확장 파라미터: 컨텍스트 길이 제한 (D-02)
-            extra_body={"options": {"num_ctx": self.num_ctx}},
-            **kwargs,
-        )
-        content = response.choices[0].message.content
-        return content or ""
+        for attempt in range(2):
+            response = self._client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                extra_body={"options": options},
+                **kwargs,
+            )
+            content = response.choices[0].message.content or ""
+            if not looks_degenerate(content):
+                return content
+            logger.warning(
+                "VLM 퇴행 출력 감지 (시도 %d/2, 길이 %d, 앞 20자 %r). 모델을 재시작합니다.",
+                attempt + 1, len(content), content[:20],
+            )
+            self.restart_model()
+        raise RuntimeError("VLM 러너가 재시작 후에도 퇴행 출력을 반환합니다. Ollama 상태를 확인하세요.")
 
     def answer_with_images(
         self,
@@ -106,18 +149,14 @@ class VLMClient:
         for img in capped:
             content.append({"type": "image_url", "image_url": {"url": _image_to_data_url(img)}})
 
-        kwargs = {"max_tokens": max_tokens} if max_tokens else {}
-        response = self._client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": content},
-            ],
-            # D-11: temperature 0으로 답변 생성을 결정적으로 만든다 (평가 재현성)
-            extra_body={"options": {"num_ctx": self.num_ctx, "temperature": settings.answer_temperature}},
-            **kwargs,
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content},
+        ]
+        # D-11: temperature 0으로 답변 생성을 결정적으로 만든다 (평가 재현성)
+        return self._chat(
+            messages, {"num_ctx": self.num_ctx, "temperature": settings.answer_temperature}, max_tokens
         )
-        return response.choices[0].message.content or ""
 
     def ping(self) -> bool:
         """서버가 응답하는지 간단히 확인한다 (이미지 없이)."""
