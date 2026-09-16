@@ -35,6 +35,18 @@ CAPTION_PROMPT = (
 )
 
 
+# D-15: 검색용 전사(轉寫) 우선 프롬프트. v2(위)는 창작을 막았지만 캡션이 짧아져 검색 신호가 약해졌다
+# (합성 질의 194건에서 OCR 단독보다 낮음). 보이는 글자를 그대로 옮기게 해 검색 가능한 문자열을 확보하고,
+# 해석·추측은 마지막 한 문장으로만 제한한다. 창작 금지 원칙(D-07)은 그대로다.
+CAPTION_PROMPT_V3 = (
+    "이 문서 페이지에 보이는 글자를 있는 그대로 모두 옮겨 적어라.\n"
+    "- 제목, 소제목, 표의 머리글과 각 칸의 값, 차트의 제목·축 이름·범례·수치, 사진 설명 문구, 도장·손글씨를 포함한다.\n"
+    "- 표는 한 행씩 '항목: 값, 값, …' 형식으로 옮겨라. 차트는 '범례: 수치' 형식으로 읽히는 값만 적어라.\n"
+    "- 보이지 않거나 흐릿한 글자는 '(판독 불가)'라고 쓰고 추측해서 채우지 마라. 없는 표·숫자·이름을 만들지 마라.\n"
+    "- 장식용 도형·색 막대·배경 무늬는 적지 마라.\n"
+    "- 글자를 다 옮긴 뒤 마지막 줄에 '요약:'으로 시작하는 한 문장으로 이 페이지가 무엇인지 적어라."
+)
+
 @dataclass
 class CaptionResult:
     page_id: str
@@ -43,13 +55,13 @@ class CaptionResult:
     error: str | None = None
 
 
-def caption_page(client: VLMClient, page_id: str, image, retries: int = 1) -> CaptionResult:
+def caption_page(client: VLMClient, page_id: str, image, retries: int = 1, prompt: str = CAPTION_PROMPT) -> CaptionResult:
     """한 페이지를 캡셔닝한다. 실패 시 retries만큼 재시도하고, 끝내 실패하면 error를 채워 반환한다."""
     t0 = time.time()
     last_err: str | None = None
     for attempt in range(retries + 1):
         try:
-            caption = client.caption(image, CAPTION_PROMPT, max_tokens=settings.caption_max_tokens)
+            caption = client.caption(image, prompt, max_tokens=settings.caption_max_tokens)
             return CaptionResult(page_id=page_id, caption=caption, elapsed_sec=time.time() - t0)
         except Exception as exc:  # noqa: BLE001
             last_err = f"{type(exc).__name__}: {exc}"

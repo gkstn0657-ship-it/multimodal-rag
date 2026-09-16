@@ -95,10 +95,11 @@ def build_chunks(routed_pages: list[RoutedPage], captions: dict[str, str]) -> li
         elif route == Route.OCR:
             text_for_embedding = page.ocr
         elif route == Route.IMAGE:
-            text_for_embedding = captions.get(page.id, "")
-            if not text_for_embedding.strip():
-                # 캡션 실패 페이지는 OCR/텍스트로 대체해 누락시키지 않는다
-                text_for_embedding = page.ocr or page.text
+            # D-15: 캡션 + OCR 합집합. 합성 질의 194건에서 OCR 문자열이 짧은 캡션보다 검색 신호가 강했고,
+            # 캡션은 OCR이 비는 페이지(사진·구분지)를 메운다. 둘을 같이 넣어 어느 한쪽이 비어도 남게 한다.
+            caption = captions.get(page.id, "").strip()
+            ocr = (page.ocr or page.text or "").strip()
+            text_for_embedding = "\n".join(part for part in (caption, ocr) if part)
         else:  # IMAGE_OVERFLOW
             text_for_embedding = page.ocr or page.text
 
