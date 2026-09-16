@@ -127,11 +127,15 @@ class VLMClient:
                 **kwargs,
             )
             content = response.choices[0].message.content or ""
-            if not looks_degenerate(content):
+            # D-12 실측: 퇴행 응답은 항상 usage.prompt_tokens == 0 이었다(정상 응답은 수천).
+            # 모델이 프롬프트를 처리하지 않고 반환한 서버 측 실패의 확실한 신호라 함께 검사한다.
+            prompt_tokens = getattr(getattr(response, "usage", None), "prompt_tokens", None)
+            not_processed = prompt_tokens == 0
+            if not looks_degenerate(content) and not not_processed:
                 return content
             logger.warning(
-                "VLM 퇴행 출력 감지 (시도 %d/2, 길이 %d, 앞 20자 %r). 모델을 재시작합니다.",
-                attempt + 1, len(content), content[:20],
+                "VLM 퇴행/미처리 응답 감지 (시도 %d/2, prompt_tokens=%s, 길이 %d, 앞 20자 %r). 모델을 재시작합니다.",
+                attempt + 1, prompt_tokens, len(content), content[:20],
             )
             self.restart_model()
         raise RuntimeError("VLM 러너가 재시작 후에도 퇴행 출력을 반환합니다. Ollama 상태를 확인하세요.")
