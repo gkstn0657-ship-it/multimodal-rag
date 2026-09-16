@@ -39,6 +39,8 @@ class Settings(BaseSettings):
     top_k_candidates: int = 10
     top_n_after_rerank: int = 5
     answer_image_cap: int = 2  # D-02: 4k 컨텍스트 제약으로 원본 이미지 최대 2장만 투입
+    answer_context_max_chars_per_chunk: int = 500  # D-09: 청크 텍스트 5개 + 이미지 2장 합산이 4k 초과(실측 5,519토큰)
+    answer_max_tokens: int = 500
 
     # --- 라우팅 (Phase 1, D-04 4갈래) ---
     route_min_text_chars: int = 100  # 이상이면 텍스트 경로

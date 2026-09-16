@@ -98,6 +98,7 @@ class VLMClient:
         system_prompt: str,
         user_text: str,
         images: list[Image.Image | bytes | str | Path],
+        max_tokens: int | None = None,
     ) -> str:
         """여러 이미지 + 텍스트 컨텍스트로 답변을 생성한다 (답변 상한: settings.answer_image_cap)."""
         capped = images[: settings.answer_image_cap]
@@ -105,6 +106,7 @@ class VLMClient:
         for img in capped:
             content.append({"type": "image_url", "image_url": {"url": _image_to_data_url(img)}})
 
+        kwargs = {"max_tokens": max_tokens} if max_tokens else {}
         response = self._client.chat.completions.create(
             model=self.model,
             messages=[
@@ -112,6 +114,7 @@ class VLMClient:
                 {"role": "user", "content": content},
             ],
             extra_body={"options": {"num_ctx": self.num_ctx}},
+            **kwargs,
         )
         return response.choices[0].message.content or ""
 
