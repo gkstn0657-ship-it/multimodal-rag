@@ -1,0 +1,11 @@
+정답 페이지 수집: 592 / 592
+visual TEXT경로 156장 | colored>0.02:  49 (31%)
+visual TEXT경로 156장 | colored>0.05:  21 (13%)
+visual TEXT경로 156장 | colored>0.1:   9 (6%)
+cross  TEXT경로 324장 | colored>0.02:  74 (23%)
+cross  TEXT경로 324장 | colored>0.05:  21 (6%)
+cross  TEXT경로 324장 | colored>0.1:   8 (2%)
+text   TEXT경로 102장 | colored>0.02:  28 (27%)
+text   TEXT경로 102장 | colored>0.05:  10 (10%)
+text   TEXT경로 102장 | colored>0.1:   2 (2%)
+visual 정답 페이지 채색 비율 p25/p50/p75/p90: 0.000 0.006 0.030 0.079
