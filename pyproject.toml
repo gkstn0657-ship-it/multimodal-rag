@@ -17,6 +17,8 @@ dependencies = [
     "pydantic>=2.7",
     "pydantic-settings>=2.4",
     "tqdm>=4.66",
+    "pymupdf>=1.24",
+    "opendartreader>=0.2",
 ]
 
 [dependency-groups]

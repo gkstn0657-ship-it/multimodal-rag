@@ -18,6 +18,7 @@ from __future__ import annotations
 import io
 from dataclasses import dataclass
 from enum import Enum
+from typing import Iterable
 
 from PIL import Image
 
@@ -86,13 +87,18 @@ def decide_route(page: Page) -> Route:
     return Route.IMAGE
 
 
-def route_pages(limit: int | None = None) -> tuple[list[RoutedPage], RoutingStats]:
-    """전체(또는 limit개) 페이지를 라우팅하고 통계를 함께 반환한다."""
+def route_pages(
+    limit: int | None = None, pages: "Iterable[Page] | None" = None
+) -> tuple[list[RoutedPage], RoutingStats]:
+    """전체(또는 limit개) 페이지를 라우팅하고 통계를 함께 반환한다.
+
+    pages를 넘기면 SDS KoPub(iter_pages) 대신 그 스트림을 라우팅한다 (D-16: DART용).
+    """
     stats = RoutingStats()
     routed: list[RoutedPage] = []
     image_route_count = 0
 
-    for page in iter_pages(limit=limit):
+    for page in (pages if pages is not None else iter_pages(limit=limit)):
         stats.total += 1
         route = decide_route(page)
 

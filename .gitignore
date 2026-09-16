@@ -37,3 +37,6 @@ scripts/daily_commit.log
 
 # Test cache
 .pytest_cache/
+
+# OpenDartReader 로컬 캐시 (자동 생성)
+docs_cache/
