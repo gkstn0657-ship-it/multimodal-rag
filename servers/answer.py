@@ -15,10 +15,33 @@ from config import settings
 from servers.retrieve import RetrievedChunk, retrieve
 from servers.vlm_client import VLMClient
 
+ABSTAIN_PHRASE = "문서에서 찾을 수 없습니다"
+
+# D-13: 예전 문구("근거가 없으면 '문서에서 찾을 수 없습니다'라고 답하라")는 답을 다 써놓고 끝에
+# 기권 문장을 덧붙이는 자기모순을 유발했다(채점 15문항 중 3·4·6번). 기권은 답을 대체하는
+# 배타적 선택임을 명시하고, 후처리(strip_contradictory_abstention)로 한 번 더 막는다.
 SYSTEM_PROMPT = (
-    "제공된 문서에 근거해서만 답하라. 근거가 없으면 "
-    "'문서에서 찾을 수 없습니다'라고 답하라. 답변 끝에 출처(파일명·페이지)를 표기하라."
+    "제공된 문서에 근거해서만 답하라. "
+    f"근거가 전혀 없을 때만, 다른 내용 없이 '{ABSTAIN_PHRASE}' 한 문장으로만 답하라. "
+    "근거가 있어서 답을 썼다면 그 문장을 어디에도 덧붙이지 마라. "
+    "답변 끝에 출처(파일명·페이지)를 표기하라."
 )
+
+
+def strip_contradictory_abstention(answer: str, min_content_chars: int = 40) -> str:
+    """실제 답 뒤에 붙은 기권 문장을 제거한다 (D-13).
+
+    답변에 기권 문구 외의 내용이 min_content_chars 이상 있으면, 기권 문구가 들어간 줄만 지운다.
+    답이 기권 문구뿐이면(정상 기권) 그대로 둔다.
+    """
+    if ABSTAIN_PHRASE not in answer:
+        return answer
+    lines = answer.splitlines()
+    kept = [ln for ln in lines if ABSTAIN_PHRASE not in ln]
+    content = "".join(kept).strip()
+    if len(content) < min_content_chars:
+        return answer  # 실질적 답이 없으면 정상 기권으로 본다
+    return "\n".join(kept).strip()
 
 
 @dataclass
@@ -103,6 +126,7 @@ def generate_from_chunks(
         SYSTEM_PROMPT, user_text, images_to_send, max_tokens=settings.answer_max_tokens
     )
 
+    response = strip_contradictory_abstention(response)
     sources = [c.source_file for c in chunks]
     return AnswerResult(answer=response, sources=sources, used_chunks=chunks)
 

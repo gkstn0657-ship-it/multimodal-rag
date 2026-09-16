@@ -33,3 +33,31 @@ def test_budget_shrinks_with_images():
         * settings.answer_context_chars_per_token
     )
     assert b0 == expected0
+
+
+# --- D-13: 자기모순 기권 문장 제거 ---
+from servers.answer import ABSTAIN_PHRASE, strip_contradictory_abstention  # noqa: E402
+
+
+def test_trailing_abstention_after_real_answer_is_removed():
+    ans = (
+        "과학고 입학전형의 공정성을 위해 자기주도학습 전형 규정과 절차를 매뉴얼에 명시하고 "
+        "사교육 영향평가를 실시해야 합니다.\n\n출처: 결과보고서_52\n\n" + ABSTAIN_PHRASE
+    )
+    out = strip_contradictory_abstention(ans)
+    assert ABSTAIN_PHRASE not in out
+    assert "사교육 영향평가" in out and "출처: 결과보고서_52" in out
+
+
+def test_pure_abstention_is_kept():
+    assert strip_contradictory_abstention(ABSTAIN_PHRASE + ".") == ABSTAIN_PHRASE + "."
+
+
+def test_abstention_with_only_short_filler_is_kept():
+    ans = "압구당시\n" + ABSTAIN_PHRASE
+    assert strip_contradictory_abstention(ans) == ans
+
+
+def test_answer_without_phrase_is_unchanged():
+    ans = "정수기는 단체급식용, 저장형, 수도직결형으로 나뉩니다."
+    assert strip_contradictory_abstention(ans) == ans
