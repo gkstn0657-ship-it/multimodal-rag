@@ -1,0 +1,15 @@
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 47469.40it/s]
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights:   8%|▊         | 32/393 [00:00<00:01, 317.94it/s]Loading weights:  16%|█▋        | 64/393 [00:00<00:01, 246.27it/s]Loading weights:  23%|██▎       | 90/393 [00:00<00:01, 238.12it/s]Loading weights:  29%|██▉       | 115/393 [00:00<00:01, 241.03it/s]Loading weights:  36%|███▌      | 140/393 [00:00<00:01, 231.95it/s]Loading weights:  42%|████▏     | 164/393 [00:00<00:00, 230.90it/s]Loading weights:  48%|████▊     | 188/393 [00:00<00:00, 214.64it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 462.26it/s]
+VLM 퇴행 출력 감지 (시도 1/2, 길이 31, 앞 20자 '@@@@@@@@@@@@@@@@@@@@'). 모델을 재시작합니다.
+VLM 퇴행 출력 감지 (시도 2/2, 길이 31, 앞 20자 '@@@@@@@@@@@@@@@@@@@@'). 모델을 재시작합니다.
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "C:\Users\SSAFY\Desktop\RAG 포폴 소스\멀티모탈(이미지+텍스트)\servers\answer.py", line 91, in generate_from_chunks
+    response = client.answer_with_images(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\RAG 포폴 소스\멀티모탈(이미지+텍스트)\servers\vlm_client.py", line 157, in answer_with_images
+    return self._chat(
+           ^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\RAG 포폴 소스\멀티모탈(이미지+텍스트)\servers\vlm_client.py", line 137, in _chat
+    raise RuntimeError("VLM 러너가 재시작 후에도 퇴행 출력을 반환합니다. Ollama 상태를 확인하세요.")
+RuntimeError: VLM 러너가 재시작 후에도 퇴행 출력을 반환합니다. Ollama 상태를 확인하세요.

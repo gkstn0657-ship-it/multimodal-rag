@@ -1,0 +1,9 @@
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 43793.34it/s]
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights:   5%|▍         | 19/393 [00:00<00:02, 166.32it/s]Loading weights:  14%|█▍        | 55/393 [00:00<00:01, 266.61it/s]Loading weights:  23%|██▎       | 89/393 [00:00<00:01, 296.66it/s]Loading weights:  30%|███       | 119/393 [00:00<00:00, 288.66it/s]Loading weights:  38%|███▊      | 149/393 [00:00<00:01, 227.21it/s]Loading weights:  44%|████▍     | 174/393 [00:00<00:01, 214.73it/s]Loading weights:  50%|█████     | 197/393 [00:00<00:00, 198.41it/s]Loading weights:  57%|█████▋    | 224/393 [00:00<00:00, 211.26it/s]Loading weights:  63%|██████▎   | 246/393 [00:01<00:00, 210.81it/s]Loading weights:  68%|██████▊   | 268/393 [00:01<00:00, 210.92it/s]Loading weights: 100%|██████████| 393/393 [00:01<00:00, 325.64it/s]
+T1 Q14 전체 프롬프트                                       | chars= 5624 prompt_tokens=0 chars/token=0.00 | 퇴행=True | '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+T3 Q2 전체 프롬프트 (긴 컨텍스트 대조)                            | chars= 3885 prompt_tokens=2849 chars/token=1.36 | 퇴행=False | '이러한 주요 업적과 국제적 위상에 대해 다음과 같은 내용이 있습니다:\n\n1. KARI(Ko'
+T2 Q14 컨텍스트 2,500자로 절단                               | chars= 2677 prompt_tokens=0 chars/token=0.00 | 퇴행=True | '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+T2b Q14 컨텍스트 1,200자로 절단                              | chars= 1377 prompt_tokens=0 chars/token=0.00 | 퇴행=True | '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+T4 Q14 전체, 한자·중점·CR 제거                               | chars= 5450 prompt_tokens=0 chars/token=0.00 | 퇴행=True | '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+ctx14 chars 5447 | CR 174 | 한자 4 | 중점 46
+ctx2  chars 3735

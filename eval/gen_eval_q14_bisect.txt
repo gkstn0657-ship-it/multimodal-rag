@@ -1,0 +1,34 @@
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 55889.75it/s]
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights:   5%|▍         | 18/393 [00:00<00:02, 166.23it/s]Loading weights:  15%|█▍        | 57/393 [00:00<00:01, 290.87it/s]Loading weights:  22%|██▏       | 87/393 [00:00<00:01, 256.08it/s]Loading weights:  30%|███       | 119/393 [00:00<00:00, 277.93it/s]Loading weights:  39%|███▉      | 153/393 [00:00<00:00, 297.14it/s]Loading weights:  47%|████▋     | 184/393 [00:00<00:00, 269.99it/s]Loading weights:  56%|█████▌    | 219/393 [00:00<00:00, 289.71it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 475.15it/s]
+[compat] A 질문만                                        chars=   93 prompt_tokens=125   퇴행=False '정수기의 종류에는 주로 대규모 설치를 위해 사용되는 세 가지 유형이 있습'
+[compat] B 중립 질문 + ctx14 앞 1200자                      chars= 1223 prompt_tokens=0     퇴행=True '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+[compat] C 중립 질문 + ctx14 앞 300자                       chars=  323 prompt_tokens=0     퇴행=True '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+[compat] D Q14 질문 + ctx2(무관, 정상 컨텍스트)                 chars= 3837 prompt_tokens=2861  퇴행=False '문서에서 찾을 수 없습니다.'
+[native] E 네이티브 /api/chat, Q14 전체                     chars= 5549 prompt_eval=None  퇴행=True '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'  err=None
+[native] F 네이티브, 질문만                                  chars=   93 prompt_eval=125   퇴행=False '문서에서 찾을 수 없습니다.'  err=None
+--- server.log 마지막 25줄 ---
+slot get_availabl: id  0 | task -1 |  - skipping, slot is empty
+slot get_availabl: id  1 | task -1 |  - skipping, slot is empty
+slot get_availabl: id  1 | task -1 | selected slot by LRU, t_last = -1
+srv  get_availabl: updating prompt cache
+srv          load:  - looking for better prompt, base f_keep = -1.000, f_sim = 0.000
+srv        update:  - cache state: 0 prompts, 0.000 MiB (limits: 8192.000 MiB, 8192 tokens, 8589934592 est)
+srv  get_availabl: prompt cache update took 0.01 ms
+slot launch_slot_: id  1 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  1 | task -1 | sampler params: 
+	repeat_last_n = 64, repeat_penalty = 1.000, frequency_penalty = 0.000, presence_penalty = 0.000
+	dry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64
+	top_k = 40, top_p = 0.900, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.000
+	mirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900
+slot launch_slot_: id  1 | task 0 | processing task, is_child = 0
+slot process_sing: id  0 | task -1 | saving idle slot to prompt cache
+slot   operator(): id  1 | task 0 | new prompt, n_ctx_slot = 4096, n_keep = 4, task.n_tokens = 125
+slot   operator(): id  1 | task 0 | cached n_tokens = 0, memory_seq_rm [0, end)
+slot init_sampler: id  1 | task 0 | init sampler, took 0.02 ms, tokens: text = 125, total = 125
+slot print_timing: id  1 | task 0 | prompt eval time =      97.29 ms /   125 tokens (    0.78 ms per token,  1284.86 tokens per second)
+slot print_timing: id  1 | task 0 |        eval time =     215.24 ms /     9 tokens (   26.90 ms per token,    37.17 tokens per second)
+slot print_timing: id  1 | task 0 |       total time =     312.52 ms /   134 tokens
+slot print_timing: id  1 | task 0 |    graphs reused =          8
+slot      release: id  1 | task 0 | stop processing: n_tokens = 133, truncated = 0
+srv  update_slots: all slots are idle
+[GIN] 2026/09/16 - 11:14:53 | 200 |    4.9615274s |       127.0.0.1 | POST     "/api/chat"

@@ -1,0 +1,9 @@
+1 헤더줄만 [출처: ...]                               len=  78 prompt_tokens=135   퇴행=False
+2 헤더 없이 본문 앞 200자                              len= 200 prompt_tokens=232   퇴행=True
+3 첫 두 줄 (정수기 설치·관리 / 정수기란?)                    len=  15 prompt_tokens=95    퇴행=False
+4 정수기란 정의 문장                                   len=  62 prompt_tokens=132   퇴행=False
+5 단어: 먹는물                                      len=   3 prompt_tokens=86    퇴행=False
+6 단어: 먹는물관리법                                   len=   6 prompt_tokens=88    퇴행=False
+7 단어: 정수기란                                     len=   4 prompt_tokens=87    퇴행=False
+8 헤더 NFKC 정규화                                  len=  78 prompt_tokens=135   퇴행=False
+9 헤더에서 "먹는물"→"음용수" 치환                          len=  78 prompt_tokens=135   퇴행=False
