@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import unicodedata
 from dataclasses import dataclass
 
 from config import settings
@@ -25,6 +26,16 @@ class AnswerResult:
     answer: str
     sources: list[str]
     used_chunks: list[RetrievedChunk]
+
+
+def normalize_for_vlm(text: str) -> str:
+    """VLM에 넣는 텍스트를 NFKC로 정규화한다 (D-12).
+
+    실측: 정수기 페이지 본문 200자가 건강한 러너에서도 결정적으로 '@' 반복 출력을
+    유발했다. 줄바꿈·한자·중점 제거는 소용없었고 NFKC 정규화만 통과했다. 호환 문자
+    하나가 Ollama/llama.cpp 토크나이저 경로에서 문제를 일으키는 것으로 보인다.
+    """
+    return unicodedata.normalize("NFKC", text)
 
 
 def _text_char_budget(num_images: int) -> int:
@@ -58,7 +69,7 @@ def _build_context_text(chunks: list[RetrievedChunk], images_used: list[str]) ->
         allowed = min(per_chunk_cap, budget)
         text = c.text if len(c.text) <= allowed else c.text[:allowed] + " …(생략)"
         budget -= len(text)
-        parts.append(f"[출처: {c.source_file}]\n{text}")
+        parts.append(f"[출처: {c.source_file}]\n{normalize_for_vlm(text)}")
     return "\n\n".join(parts)
 
 
@@ -86,7 +97,7 @@ def generate_from_chunks(
     images_to_send = [c.image_path for c in image_chunks[: settings.answer_image_cap]]
 
     context_text = _build_context_text(chunks, images_to_send)
-    user_text = f"질문: {query}\n\n참고 문서:\n{context_text}"
+    user_text = f"질문: {normalize_for_vlm(query)}\n\n참고 문서:\n{context_text}"
 
     response = client.answer_with_images(
         SYSTEM_PROMPT, user_text, images_to_send, max_tokens=settings.answer_max_tokens
