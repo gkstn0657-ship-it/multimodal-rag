@@ -39,8 +39,17 @@ class Settings(BaseSettings):
     top_k_candidates: int = 10
     top_n_after_rerank: int = 5
     answer_image_cap: int = 2  # D-02: 4k 컨텍스트 제약으로 원본 이미지 최대 2장만 투입
-    answer_context_max_chars_per_chunk: int = 500  # D-09: 청크 텍스트 5개 + 이미지 2장 합산이 4k 초과(실측 5,519토큰)
+    answer_image_max_rank: int = 2  # D-11: 재랭킹 상위 이 순위 안의 청크만 이미지로 투입 (5위 무관 이미지가 답을 망친 실측)
     answer_max_tokens: int = 500
+    answer_temperature: float = 0.0  # D-11: 평가 재현성. 기본 0.8에서는 같은 프롬프트로 점수가 10점 넘게 흔들렸다
+
+    # D-11: 컨텍스트 텍스트 예산을 이미지 수에 따라 동적으로 잡는다 (D-09의 500자 고정 절단 대체).
+    #   가용 토큰 = num_ctx - 답변 예약 - 고정 오버헤드 - 이미지당 토큰 x 이미지 수
+    #   텍스트 글자 예산 = 가용 토큰 x chars_per_token, 재랭킹 순서대로 채움
+    answer_context_reserved_tokens: int = 200  # 시스템 프롬프트 + 질문 + 출처 표기 등
+    answer_context_tokens_per_image: int = 1500  # 1,280px 이미지 1장 실측 약 1,450토큰
+    answer_context_chars_per_token: float = 1.5  # 한국어 보수적 추정
+    answer_context_max_chars_per_chunk: int = 2500  # 청크 하나가 예산을 독식하지 않도록
 
     # --- 라우팅 (Phase 1, D-04 4갈래) ---
     route_min_text_chars: int = 100  # 이상이면 텍스트 경로

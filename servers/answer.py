@@ -27,18 +27,37 @@ class AnswerResult:
     used_chunks: list[RetrievedChunk]
 
 
+def _text_char_budget(num_images: int) -> int:
+    """이미지 수에 따라 텍스트 컨텍스트에 쓸 수 있는 글자 수를 계산한다 (D-11)."""
+    tokens = (
+        settings.vlm_num_ctx
+        - settings.answer_max_tokens
+        - settings.answer_context_reserved_tokens
+        - settings.answer_context_tokens_per_image * num_images
+    )
+    return max(int(tokens * settings.answer_context_chars_per_token), 300)
+
+
 def _build_context_text(chunks: list[RetrievedChunk], images_used: list[str]) -> str:
     """텍스트 경로 청크 + 이미지 상한 초과분(캡션)을 하나의 컨텍스트 문자열로 합친다.
 
     D-09: 청크 5개(원문은 페이지당 최대 13,000자) + 이미지 2장을 그대로 합치면
-    4k 컨텍스트를 넘는다(실측 5,519토큰). 청크당 텍스트를 잘라 예산을 지킨다.
+    4k 컨텍스트를 넘는다(실측 5,519토큰).
+    D-11: 500자 고정 절단은 정답 표(민원 통계, 면세 한도 등)를 정확히 잘라냈다.
+    이미지 수에 따라 전체 글자 예산을 잡고, 재랭킹 순서대로 채운다. 이미지가 없는
+    대부분의 질의에서는 예산이 훨씬 넉넉해진다.
     """
-    cap = settings.answer_context_max_chars_per_chunk
+    budget = _text_char_budget(len(images_used))
+    per_chunk_cap = settings.answer_context_max_chars_per_chunk
     parts = []
     for c in chunks:
         if c.image_path and c.image_path in images_used:
             continue  # 원본 이미지로 직접 투입되므로 텍스트 컨텍스트에서 중복 제외
-        text = c.text if len(c.text) <= cap else c.text[:cap] + " …(생략)"
+        if budget <= 0:
+            break
+        allowed = min(per_chunk_cap, budget)
+        text = c.text if len(c.text) <= allowed else c.text[:allowed] + " …(생략)"
+        budget -= len(text)
         parts.append(f"[출처: {c.source_file}]\n{text}")
     return "\n\n".join(parts)
 
@@ -61,7 +80,9 @@ def generate_from_chunks(
         return AnswerResult(answer="문서에서 찾을 수 없습니다.", sources=[], used_chunks=[])
 
     # 원본 이미지가 있는 청크(IMAGE·OCR 경로) 중 상한만큼만 이미지로 투입 (D-02, D-04)
-    image_chunks = [c for c in chunks if c.image_path] if use_images else []
+    # D-11: 재랭킹 상위 answer_image_max_rank 안의 청크만. 5위 무관 이미지가 답을 망친 실측 때문.
+    top_for_images = chunks[: settings.answer_image_max_rank]
+    image_chunks = [c for c in top_for_images if c.image_path] if use_images else []
     images_to_send = [c.image_path for c in image_chunks[: settings.answer_image_cap]]
 
     context_text = _build_context_text(chunks, images_to_send)

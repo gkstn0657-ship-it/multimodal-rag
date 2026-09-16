@@ -113,7 +113,8 @@ class VLMClient:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": content},
             ],
-            extra_body={"options": {"num_ctx": self.num_ctx}},
+            # D-11: temperature 0으로 답변 생성을 결정적으로 만든다 (평가 재현성)
+            extra_body={"options": {"num_ctx": self.num_ctx, "temperature": settings.answer_temperature}},
             **kwargs,
         )
         return response.choices[0].message.content or ""
