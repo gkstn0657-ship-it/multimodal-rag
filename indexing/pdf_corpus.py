@@ -5,6 +5,8 @@ SDS KoPub은 페이지 이미지·텍스트·OCR이 파켓에 미리 들어 있�
 같은 모양으로 내보낸다. 라우팅(`indexing.ingest.decide_route`)은 그대로 재사용한다.
 
 - text: PDF 텍스트 레이어. 스캔 PDF는 비어 있거나 매우 짧다 → IMAGE 경로로 간다.
+  D-31: 표가 검출되면(PyMuPDF find_tables) 원문 뒤에 마크다운 표를 이어 붙인다 — 2단 표 레이아웃이
+  한 줄로 평평하게 풀리며 행·열 대응이 사라지는 문제(D-31의 "5성급" 오독과 같은 종류)를 막기 위함.
 - ocr: 로컬 OCR 엔진이 없어 빈 문자열로 둔다. 따라서 텍스트가 빈 페이지는 OCR 경로 없이
   잉크 비율로 BLANK/IMAGE만 갈린다.
 - image_bytes: 150 DPI 렌더링 PNG. VLM 입력은 1,280px로 다시 줄이므로 그 이상은 낭비다.
@@ -20,6 +22,7 @@ from typing import Iterator
 import fitz  # PyMuPDF
 
 from indexing.corpus import Page
+from indexing.table_extract import merge_text_and_tables, tables_markdown
 
 RENDER_DPI = 150
 
@@ -37,6 +40,7 @@ def iter_pdf_pages(pdf_paths: list[Path], id_prefix: str = "dart", limit: int | 
         for pno in range(doc.page_count):
             page = doc.load_page(pno)
             text = page.get_text("text") or ""
+            text = merge_text_and_tables(text, tables_markdown(page))
             pix = page.get_pixmap(dpi=RENDER_DPI, alpha=False)
             image_bytes = pix.tobytes("png")
             yield Page(id=f"{id_prefix}/{stem}_{pno + 1}", text=text, ocr="", image_bytes=image_bytes)
