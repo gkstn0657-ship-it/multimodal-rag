@@ -31,6 +31,10 @@ class Settings(BaseSettings):
     # --- 임베딩 / 리랭킹 ---
     embed_model_name: str = "BAAI/bge-m3"
     rerank_model_name: str = "BAAI/bge-reranker-v2-m3"
+    # D-30: CrossEncoder에 max_length를 안 주면 배치 안의 가장 긴 후보 길이에 배치 전체가 패딩된다.
+    # 실측: DART 페이지(최대 6,660자, ~2천 토큰대)가 섞이자 재랭킹 한 번에 68초가 걸렸다(평소 3~5초).
+    # 질의-페이지 관련성 판단에는 페이지 앞부분이면 충분하므로 512토큰으로 제한한다.
+    rerank_max_length: int = 512
     embed_device_indexing: str = "cuda"  # 인덱싱 시점: VLM을 내린 뒤 GPU 사용
     embed_device_serving: str = "cpu"  # 서빙 시점: VLM이 GPU를 점유하므로 CPU
 

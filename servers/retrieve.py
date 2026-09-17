@@ -47,8 +47,12 @@ _reranker_cache: dict[str, CrossEncoder] = {}
 
 
 def get_reranker(device: str) -> CrossEncoder:
+    """D-30: max_length를 주지 않으면 배치 안의 가장 긴 후보 길이에 배치 전체가 패딩돼,
+    DART의 긴 페이지 하나가 섞이는 것만으로 재랭킹이 68초까지 늘어졌다(평소 3~5초). 512토큰으로 제한."""
     if device not in _reranker_cache:
-        _reranker_cache[device] = CrossEncoder(settings.rerank_model_name, device=device)
+        _reranker_cache[device] = CrossEncoder(
+            settings.rerank_model_name, device=device, max_length=settings.rerank_max_length
+        )
     return _reranker_cache[device]
 
 
