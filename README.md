@@ -13,7 +13,7 @@
   (한국 공공문서 361건, 40,781페이지) + DART 공시(5개사 사업보고서, 8,418페이지)
 
 성능평가 결과는 [docs/성능평가_보고서.md](docs/성능평가_보고서.md), 데이터셋 선정 근거는
-[docs/dataset.md](docs/dataset.md), 설계 결정과 트레이드오프(D-01~D-26)는
+[docs/dataset.md](docs/dataset.md), 설계 결정과 트레이드오프(D-01~D-27)는
 [docs/decisions.md](docs/decisions.md), 진행 경과는 [docs/worklog.md](docs/worklog.md) 참고.
 
 ## 주요 설계 결정 (요약, 전체는 docs/decisions.md)
