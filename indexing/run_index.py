@@ -71,9 +71,14 @@ def run(limit: int | None, skip_embed: bool = False) -> None:
         if not client.ping():
             raise RuntimeError("VLM 서버에 연결할 수 없습니다. Ollama가 실행 중인지 확인하세요.")
 
+        from indexing.caption import CAPTION_PROMPT_V3  # D-15/D-19: 전사 우선 프롬프트가 운영 기본
+
         t_cap = time.time()
         with ThreadPoolExecutor(max_workers=settings.caption_parallel) as ex:
-            futures = {ex.submit(caption_page, client, rp.page.id, rp.page.to_pil()): rp for rp in todo}
+            futures = {
+                ex.submit(caption_page, client, rp.page.id, rp.page.to_pil(), 1, CAPTION_PROMPT_V3): rp
+                for rp in todo
+            }
             for fut in tqdm(as_completed(futures), total=len(futures), desc="captioning", unit="page"):
                 result = fut.result()
                 if result.error:

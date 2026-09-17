@@ -144,16 +144,27 @@ def summarize(results: list[QueryResult]) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="평가 문항 수 제한 (스모크 테스트용)")
+    parser.add_argument("--store", default=None, help="평가할 벡터 저장소 디렉터리 (기본: settings.vector_store_dir)")
+    parser.add_argument("--tag", default="", help="출력 파일 접미어 (예: v3 → report_v3.json)")
     args = parser.parse_args()
 
-    print(f"검색 평가 시작 (limit={args.limit})...")
+    if args.store:
+        from pathlib import Path
+
+        import indexing.embed_store as es
+
+        settings.vector_store_dir = Path(args.store)
+        es.get_store(force_reload=True)
+
+    print(f"검색 평가 시작 (limit={args.limit}, store={settings.vector_store_dir})...")
     results, summary = evaluate(limit=args.limit)
 
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
-    out_path = settings.project_root / "eval" / "report.json"
+    suffix = f"_{args.tag}" if args.tag else ""
+    out_path = settings.project_root / "eval" / f"report{suffix}.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    detail_path = settings.project_root / "eval" / "report_detail.json"
+    detail_path = settings.project_root / "eval" / f"report_detail{suffix}.json"
 
     out_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     detail_path.write_text(

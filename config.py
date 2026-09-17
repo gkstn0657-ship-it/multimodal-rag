@@ -65,7 +65,8 @@ class Settings(BaseSettings):
     # --- 캡셔닝 (D-04) ---
     caption_parallel: int = 4  # 실측: 4요청에서 장당 3.7초, 6요청 3.5초로 포화
     caption_max_tokens: int = 400  # 549토큰 outlier(17.6초) 방지
-    caption_cache_path: Path = Path(__file__).resolve().parent / "data" / "captions.jsonl"
+    # D-19: 운영 캡션은 v3(전사 우선). v2 캐시는 data/captions.jsonl, v1은 data/captions_v1_backup.jsonl에 보존.
+    caption_cache_path: Path = Path(__file__).resolve().parent / "data" / "captions_v3.jsonl"
 
     # --- 저장소 ---
     project_root: Path = Path(__file__).resolve().parent

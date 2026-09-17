@@ -25,8 +25,8 @@ from eval.retrieval_eval import K_VALUES, metrics_from_ranks, run_search_topk
 QUERIES = Path("eval/synth_queries_image_pages.jsonl")
 # 비교 대상. 변형 저장소는 eval/build_variant_store.py로 만든다.
 STORES = {
-    "v3_caption_ocr": Path("data/vector_store_variant_v3_caption_ocr"),  # D-15 결정 반영본
-    "v2_caption": Path("data/vector_store"),  # D-07 이후 운영 저장소(캡션 단독)
+    "v3_caption_ocr": Path("data/vector_store"),  # D-19: 운영 저장소 (v3 캡션+OCR)
+    "v2_caption": Path("data/vector_store_variant_v2_caption"),  # D-07~D-18 운영본(캡션 단독)
     "v2_caption_ocr": Path("data/vector_store_variant_v2_caption_ocr"),
     "v1_caption": Path("data/vector_store_variant_v1_caption"),
     "v1_caption_ocr": Path("data/vector_store_variant_v1_caption_ocr"),
