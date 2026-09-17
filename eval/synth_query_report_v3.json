@@ -2,15 +2,15 @@
   "n_queries": 185,
   "stores": {
     "v3_caption_ocr": {
-      "recall@1": 0.3675675675675676,
-      "recall@3": 0.5837837837837838,
-      "recall@5": 0.6648648648648648,
-      "recall@10": 0.7135135135135136,
-      "ndcg@1": 0.3675675675675676,
-      "ndcg@3": 0.49832298440154943,
-      "ndcg@5": 0.5320582796280717,
-      "ndcg@10": 0.547694477679137,
-      "mrr": 0.49377305877305877,
+      "recall@1": 0.3837837837837838,
+      "recall@3": 0.5675675675675675,
+      "recall@5": 0.6378378378378379,
+      "recall@10": 0.7027027027027027,
+      "ndcg@1": 0.3837837837837838,
+      "ndcg@3": 0.49478434241313163,
+      "ndcg@5": 0.5236267897100019,
+      "ndcg@10": 0.5449746439339211,
+      "mrr": 0.4943436293436293,
       "n": 185
     },
     "v2_caption": {
@@ -79,8 +79,8 @@
     "baseline": "baseline_ocr"
   },
   "per_query_wins": {
-    "tie": 106,
-    "baseline_better": 24,
+    "tie": 107,
+    "baseline_better": 23,
     "ours_better": 55
   },
   "per_query_ranks": [
@@ -117,7 +117,7 @@
     {
       "page_id": "public_pdf/prism/[용역보고서] 청주선사박물관 건립 타당성 조사 및 기본계획 수립_압축_211",
       "query": "자료수집계획을 위해 어떤 기준을 사용할 예정인가요?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": null,
       "v2_caption": 2,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -197,7 +197,7 @@
     {
       "page_id": "public_pdf/prism/2024 독서진흥에 관한 연차보고서(최종) (1)_1",
       "query": "2024년 독서진흥에 관한 연차보고서에서 기관별 독서률은 얼마나提升了?",
-      "v3_caption_ocr": null,
+      "v3_caption_ocr": 10,
       "v2_caption": 10,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -307,7 +307,7 @@
     {
       "page_id": "public_pdf/prism/2023년 충남 공공기관(장) 경영평가 _ 결과보고서(정보공개)_703",
       "query": "충남경제진흥원의 주요 활동 내용을 설명해주세요.",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 3,
       "v2_caption": 3,
       "v2_caption_ocr": null,
       "v1_caption": 1,
@@ -337,7 +337,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/220620+간담회_인구구조+변화가+경제+및+재정에+미치는+영향_10",
       "query": "생애주기 모형을 통해 인구구조 변화와 거시경제와의 접점을 어떻게 분석한가요?",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 3,
       "v2_caption": 3,
       "v2_caption_ocr": 1,
       "v1_caption": 1,
@@ -357,7 +357,7 @@
     {
       "page_id": "public_pdf/prism/2023 건강도시 중장기 발전계획 용역보고서(종합)_23",
       "query": "\"2페이지 목차에서 '동구 현황 및 프로파일' 항목 관련 내용은 언제까지의 실태를 다루게 됩니까?\"",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 6,
       "v2_caption": 1,
       "v2_caption_ocr": null,
       "v1_caption": 1,
@@ -457,7 +457,7 @@
     {
       "page_id": "public_pdf/prism/[용역보고서] 청주선사박물관 건립 타당성 조사 및 기본계획 수립_압축_181",
       "query": "조감도 내에서 주차장의 크기는 얼마나 되나요?",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 6,
       "v2_caption": 4,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -497,7 +497,7 @@
     {
       "page_id": "public_pdf/prism/20231123_최종보고서_전라남도 지역환경보건계획수립_221",
       "query": "도민 설문조사의 주요 결과에 대해 알려주실 수 있을까요?",
-      "v3_caption_ocr": 6,
+      "v3_caption_ocr": 5,
       "v2_caption": 5,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -647,7 +647,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나_110831)뉴미디어시대,_한류의_전망과_과제_자료집_129",
       "query": "한류가 경제에 미치는 영향을 어떻게 분석한 것이며, 그 결과에 따라 국가브랜드 제고 방안은 무엇인가요?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 5,
       "v2_caption": 10,
       "v2_caption_ocr": 1,
       "v1_caption": null,
@@ -687,7 +687,7 @@
     {
       "page_id": "public_pdf/prism/221026_트라우마센터운영등심리재활서비스활성화방안연구_최종_221",
       "query": "제4장에서 심리재활서비스 조직 진단에 대한 내용은 어떤 점이 주요하게 다루어졌나요?",
-      "v3_caption_ocr": 1,
+      "v3_caption_ocr": 2,
       "v2_caption": 1,
       "v2_caption_ocr": 1,
       "v1_caption": 1,
@@ -717,7 +717,7 @@
     {
       "page_id": "public_pdf/prism/[용역] 2022년 조손가족 실태조사 사전 연구-compressed_120",
       "query": "조사표 작성 방법의 절차에 대해 설명해 줄 수 있습니까?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 1,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": 1,
@@ -837,7 +837,7 @@
     {
       "page_id": "public_pdf/prism/[붙임]시흥시 푸드플랜 활성화 컨설팅 용역 최종보고서_99",
       "query": "시흥시 친환경 농업 정책에 대한 주요 내용은 언제까지만 다루었는가요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 2,
       "v2_caption": 1,
       "v2_caption_ocr": 1,
       "v1_caption": 2,
@@ -857,7 +857,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/10-11.지자체의_학교용지부담금_미지급_사태의_해결_방안_102",
       "query": "지자체 학교용지 부담금 미지급 사례에 대한 해결 방안에 대해 좀 더 자세히 배워볼 수 있을까요?",
-      "v3_caption_ocr": 5,
+      "v3_caption_ocr": 6,
       "v2_caption": 3,
       "v2_caption_ocr": 2,
       "v1_caption": 7,
@@ -957,7 +957,7 @@
     {
       "page_id": "public_pdf/prism/20250216_제주지역 사회적 격차 실태조사 및 방향성 모색 연구_최종_523",
       "query": "제6장 결론에서 논문의 주요 내용은 뭐예요?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 1,
       "v2_caption": 2,
       "v2_caption_ocr": 1,
       "v1_caption": 2,
@@ -967,7 +967,7 @@
     {
       "page_id": "public_pdf/prism/20231123_최종보고서_전라남도 지역환경보건계획수립_289",
       "query": "제5장에서 제시된 SWOT 분석과 대응 전략에 대해 상세히 어떻게 설명하고 있습니다?",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 6,
       "v2_caption": 8,
       "v2_caption_ocr": null,
       "v1_caption": 1,
@@ -1047,7 +1047,7 @@
     {
       "page_id": "public_pdf/prism/MOLEG_법제처_이의신청 운영ㆍ관리시스템 구축을 위한 ISP 수립_통합본_발간등록번호 포함 (1)_8",
       "query": "내부환경 분석에 대한 내용이 어떤 점이든지 질문해 주시겠습니까?",
-      "v3_caption_ocr": 9,
+      "v3_caption_ocr": null,
       "v2_caption": 3,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1427,7 +1427,7 @@
     {
       "page_id": "public_pdf/prism/221026_트라우마센터운영등심리재활서비스활성화방안연구_최종_81",
       "query": "'제1장 서론에서 어떤 주제가 다루어졌나요?'",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": null,
       "v2_caption": 1,
       "v2_caption_ocr": 1,
       "v1_caption": 1,
@@ -1497,7 +1497,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나_130130)농어촌+아동·청소년+지원정책의+문제점과+개선과제_15",
       "query": "\"이 연구에서 통합서비스 개발의 핵심 목표는 무엇인가요?\"",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 4,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1537,7 +1537,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(간담회_131108)국가+SOC계정+개발의+필요성+및+활용방안-도로·철도+부문을+중심으로_자료집_1",
       "query": "2013년 도로 및 철도 부문 SOC 계정에 대한 분석과 시사점에 대해 설명해주세요.",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 1,
       "v2_caption": 3,
       "v2_caption_ocr": 3,
       "v1_caption": null,
@@ -1907,7 +1907,7 @@
     {
       "page_id": "public_pdf/prism/20221201 중장기_식품산업_진흥정책_방안마련_연구_송부용__280",
       "query": "제4차 중장기 식품산업 진흥정책 마련을 위한 식품업체, 전문가 및 정책담당자 간담회 회의록에 대한 내용이 어떤 부분에 대한지 알려주세요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 1,
       "v2_caption": 2,
       "v2_caption_ocr": 3,
       "v1_caption": 4,

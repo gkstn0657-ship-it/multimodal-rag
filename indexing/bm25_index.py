@@ -123,22 +123,37 @@ class BM25Index:
         return (store_dir / "bm25.npz").exists() and (store_dir / "bm25_vocab.json").exists()
 
 
-def build_for_store(store_dir: Path, use_prefix: bool = False) -> BM25Index:
+def build_for_store(store_dir: Path, use_prefix: bool = False, use_section: bool = False) -> BM25Index:
     """벡터 저장소의 meta.jsonl 문서 텍스트로 BM25 인덱스를 만들어 같은 디렉터리에 저장한다.
 
     use_prefix=True면 D-21의 문서명/회사·사업연도 접두어를 토큰화 대상 텍스트 앞에 붙인다.
+    use_section=True면 D-27·D-28의 절 제목(section_meta.jsonl, indexing.section_bounds 산출물)도
+    이어 붙인다 — 같은 문서 안 다른 주제 페이지 혼동(D-19 무관 비율 0.62)을 절 제목으로 보완한다.
+    section_meta.jsonl이 없으면 조용히 생략한다(하위 호환).
     임베딩 텍스트(meta.jsonl의 document, 답변에 그대로 쓰임)는 바꾸지 않는다 — BM25 색인에만 반영.
     """
     from indexing.doc_prefix import load_dart_manifest, prefix_for
 
     manifest = load_dart_manifest(Path("data/dart/manifest.jsonl")) if use_prefix else {}
+    section_titles: dict[str, str] = {}
+    if use_section:
+        section_path = store_dir / "section_meta.jsonl"
+        if section_path.exists():
+            for line in section_path.open(encoding="utf-8"):
+                rec = json.loads(line)
+                if rec.get("section_title"):
+                    section_titles[rec["id"]] = rec["section_title"]
+
     docs = []
     for line in (store_dir / "meta.jsonl").open(encoding="utf-8"):
         rec = json.loads(line)
+        head_parts = []
         if use_prefix:
-            docs.append(f"{prefix_for(rec['id'], manifest)}\n{rec['document']}")
-        else:
-            docs.append(rec["document"])
+            head_parts.append(prefix_for(rec["id"], manifest))
+        if use_section and rec["id"] in section_titles:
+            head_parts.append(section_titles[rec["id"]])
+        head = " ".join(p for p in head_parts if p)
+        docs.append(f"{head}\n{rec['document']}" if head else rec["document"])
     index = BM25Index.build(docs)
     index.save(store_dir)
     return index
@@ -151,8 +166,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("store_dirs", nargs="+")
     parser.add_argument("--prefix", action="store_true", help="D-21: 문서명/회사·사업연도 접두어를 BM25 색인에 포함")
+    parser.add_argument("--section", action="store_true", help="D-27·D-28: 절 제목을 BM25 색인에 포함")
     args = parser.parse_args()
     for d in args.store_dirs:
         t0 = time.time()
-        idx = build_for_store(Path(d), use_prefix=args.prefix)
+        idx = build_for_store(Path(d), use_prefix=args.prefix, use_section=args.section)
         print(f"{d}: 문서 {idx.n_docs:,} / 어휘 {len(idx.vocab):,} / 포스팅 {len(idx.doc_idx):,} / {time.time() - t0:.1f}초")

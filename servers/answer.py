@@ -13,7 +13,7 @@ import unicodedata
 from dataclasses import dataclass
 
 from config import settings
-from servers.retrieve import RetrievedChunk, retrieve
+from servers.retrieve import RetrievedChunk, get_neighbor_candidate, retrieve
 from servers.vlm_client import VLMClient
 
 ABSTAIN_PHRASE = "문서에서 찾을 수 없습니다"
@@ -126,7 +126,29 @@ def generate_from_chunks(
     image_chunks = [c for c in top_for_images if c.image_path] if use_images else []
     images_to_send = [c.image_path for c in image_chunks[: settings.answer_image_cap]]
 
-    context_text = _build_context_text(chunks, images_to_send)
+    # D-27·D-28: 답이 재랭킹 1위 청크의 다음 페이지에 이어지는 경우를 보완한다(부모-자식).
+    # no_content 페이지를 검색에서 아예 빼는 방식(D-28 초기안)은 정답 자체가 no_content인 질의를
+    # 깨뜨려 합성 IMAGE 질의 185건 R@5를 0.524→0.092로 무너뜨렸다(정답의 83.8%가 no_content).
+    # 대신 검색 결과는 그대로 두고, 1위 청크의 다음 페이지를 컨텍스트에 추가만 한다 — 텍스트든
+    # 이미지든 실제 정보가 있는 쪽을 그대로 보탠다(get_neighbor_candidate가 no_content면 걸러줌).
+    context_chunks = list(chunks)
+    if use_images and settings.parent_child_enabled and chunks:
+        neighbor = get_neighbor_candidate(chunks[0].page_id)
+        if neighbor and not any(c.page_id == neighbor.page_id for c in chunks):
+            if (
+                neighbor.image_path
+                and neighbor.image_path not in images_to_send
+                and len(images_to_send) < settings.answer_image_cap + settings.parent_child_max_extra_images
+            ):
+                images_to_send.append(neighbor.image_path)
+            context_chunks.append(
+                RetrievedChunk(
+                    page_id=neighbor.page_id, text=neighbor.text, route=neighbor.route,
+                    source_file=neighbor.source_file, image_path=neighbor.image_path, score=0.0,
+                )
+            )
+
+    context_text = _build_context_text(context_chunks, images_to_send)
     user_text = f"질문: {normalize_for_vlm(query)}\n\n참고 문서:\n{context_text}"
 
     response = client.answer_with_images(
@@ -134,8 +156,8 @@ def generate_from_chunks(
     )
 
     response = strip_contradictory_abstention(response)
-    sources = [c.source_file for c in chunks]
-    return AnswerResult(answer=response, sources=sources, used_chunks=chunks)
+    sources = [c.source_file for c in context_chunks]
+    return AnswerResult(answer=response, sources=sources, used_chunks=context_chunks)
 
 
 def answer(query: str, client: VLMClient | None = None) -> AnswerResult:

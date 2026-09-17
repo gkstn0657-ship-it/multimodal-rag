@@ -46,6 +46,17 @@ class Settings(BaseSettings):
     # D-20: BM25 하이브리드(RRF 병합). 저장소에 bm25.npz가 없으면 켜져 있어도 밀집 검색만 수행된다.
     hybrid_enabled: bool = True
     rrf_k: int = 60  # RRF 표준값(1/(k+rank)). 작을수록 1위 쏠림이 커짐
+    # D-28: 표지·구분지·목차(no_content) 페이지를 검색 후보에서 제외하는 옵션.
+    # 기본값 False — 실측 결과 역효과가 더 크다: 합성 IMAGE 질의 185건 중 83.8%는 질문 자체가
+    # "이 절 제목이 뭐냐"류라 정답이 바로 그 표지·구분지 페이지다. 검색에서 빼면 정답 자체가
+    # 사라져 R@5가 0.524→0.092로 무너졌다(D-28). "표지가 잡혀 내용 없는 답이 나오는" 문제는
+    # 검색에서 빼는 대신 parent_child_enabled(답변 단계에서 다음 페이지로 보완)로 다룬다.
+    filter_no_content: bool = False
+    no_content_overfetch_factor: int = 3  # 필터링으로 빠지는 만큼 채우기 위해 k배 더 가져온다
+    # D-28: 부모-자식 컨텍스트. 재랭킹 1위 청크의 같은 절 다음 페이지 이미지를 답변에 추가로 투입한다
+    # (답이 앞뒤 페이지에 걸친 경우 보완). no_content 페이지는 이웃으로 쓰지 않는다.
+    parent_child_enabled: bool = True
+    parent_child_max_extra_images: int = 1
     answer_image_cap: int = 2  # D-02: 4k 컨텍스트 제약으로 원본 이미지 최대 2장만 투입
     answer_image_max_rank: int = 2  # D-11: 재랭킹 상위 이 순위 안의 청크만 이미지로 투입 (5위 무관 이미지가 답을 망친 실측)
     answer_max_tokens: int = 500
