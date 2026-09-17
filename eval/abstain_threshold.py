@@ -20,6 +20,7 @@ from pathlib import Path
 
 from config import settings
 import indexing.embed_store as es
+from indexing.doc_prefix import load_dart_manifest, prefix_for
 from servers.retrieve import retrieve
 
 SAMPLE = Path("eval/judge_sample_retrieval.json")
@@ -32,6 +33,7 @@ STORE_BY_CORPUS = {"sds": Path("data/vector_store"), "dart": Path("data/vector_s
 def main() -> None:
     sample = json.loads(SAMPLE.read_text(encoding="utf-8"))["items"]
     grades = json.loads(GRADES.read_text(encoding="utf-8"))
+    manifest = load_dart_manifest(Path("data/dart/manifest.jsonl"))
     settings.hybrid_enabled = True
 
     rows = []
@@ -50,10 +52,16 @@ def main() -> None:
             g = grades.get(s["sample_id"], {}).get(top1.page_id)
             if g is None:
                 ungraded_top1.append((s["sample_id"], top1.page_id))
+            scores = [round(float(c.score), 4) for c in chunks]
+            # D-22 후속 신호: 1·2위 격차, top-5 안 서로 다른 문서 수(문서명 접두어 기준)
+            docs = {prefix_for(c.page_id, manifest) for c in chunks}
             rows.append({
                 "sample_id": s["sample_id"], "corpus": corpus, "query": s["query"],
                 "expect_answer": s["expect_answer"], "top1_page": top1.page_id,
-                "top1_score": round(float(top1.score), 4), "top1_grade": g,
+                "top1_score": scores[0], "top1_grade": g,
+                "margin": round(scores[0] - scores[1], 4) if len(scores) > 1 else None,
+                "top5_scores": scores, "n_distinct_docs": len(docs),
+                "top5_grades": [grades.get(s["sample_id"], {}).get(c.page_id) for c in chunks],
             })
         print(f"{corpus}: {len(items)}문항 검색 완료", flush=True)
 

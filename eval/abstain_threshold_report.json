@@ -7,7 +7,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2022-28 (가칭) 장애인미디어접근 기본법 입법안 연구_246",
       "top1_score": 0.0106,
-      "top1_grade": 0
+      "top1_grade": 0,
+      "margin": 0.005,
+      "top5_scores": [
+        0.0106,
+        0.0056,
+        0.005,
+        0.0042,
+        0.0032
+      ],
+      "n_distinct_docs": 5,
+      "top5_grades": [
+        0,
+        null,
+        null,
+        0,
+        null
+      ]
     },
     {
       "sample_id": "J07",
@@ -16,7 +32,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서101호-20101130)도시하천의+건천화+방지를+위한+물순환+건전화+대책_24",
       "top1_score": 0.0695,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0653,
+      "top5_scores": [
+        0.0695,
+        0.0042,
+        0.0025,
+        0.0023,
+        0.0022
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        2,
+        0,
+        0,
+        0,
+        null
+      ]
     },
     {
       "sample_id": "J24",
@@ -25,7 +57,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/230330 제2차 세종시 자원순환시행계획 전략환경영향평가서(5M)_55",
       "top1_score": 0.0714,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0666,
+      "top5_scores": [
+        0.0714,
+        0.0048,
+        0.0039,
+        0.0017,
+        0.0009
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        1,
+        null,
+        null,
+        null,
+        0
+      ]
     },
     {
       "sample_id": "J20",
@@ -34,7 +82,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2024년 인천광역시 다문화, 외국인 가구통계보고서_275",
       "top1_score": 0.3977,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0277,
+      "top5_scores": [
+        0.3977,
+        0.37,
+        0.2002,
+        0.1066,
+        0.0801
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        2,
+        0,
+        1,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J17",
@@ -43,7 +107,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2040 아산시 환경계획(최종안)_586",
       "top1_score": 0.5276,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.4709,
+      "top5_scores": [
+        0.5276,
+        0.0567,
+        0.0567,
+        0.0351,
+        0.0224
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        1,
+        null,
+        null,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J27",
@@ -52,7 +132,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/230307_기업 직업훈련 활성화를 위한 규제혁신 방안_인쇄용_최종인쇄본_203",
       "top1_score": 0.6067,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.1529,
+      "top5_scores": [
+        0.6067,
+        0.4538,
+        0.1368,
+        0.0805,
+        0.0161
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        1,
+        0,
+        0,
+        0,
+        null
+      ]
     },
     {
       "sample_id": "J09",
@@ -61,7 +157,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/231010_과학_과학기술+국제협력체계의+재편과+한국의+대응전략+모색_72",
       "top1_score": 0.6098,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.1943,
+      "top5_scores": [
+        0.6098,
+        0.4155,
+        0.2491,
+        0.2449,
+        0.1822
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        null,
+        1,
+        1,
+        1
+      ]
     },
     {
       "sample_id": "J08",
@@ -70,7 +182,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/생활법령/세탁소 운영자 _ 세탁소 운영 _ 세금의 납부 _ 현금영수증 가맹점의 가입 (본문) _ 찾기쉬운 생활법령정보_3",
       "top1_score": 0.6185,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0014,
+      "top5_scores": [
+        0.6185,
+        0.6171,
+        0.5019,
+        0.0032,
+        0.002
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        2,
+        1,
+        2,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J23",
@@ -79,7 +207,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(세미나-100913)동북아+전략환경의+변화와+한국의+대응전략+자료집_3",
       "top1_score": 0.6222,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.3165,
+      "top5_scores": [
+        0.6222,
+        0.3057,
+        0.2734,
+        0.2648,
+        0.2104
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        null,
+        1,
+        null,
+        1
+      ]
     },
     {
       "sample_id": "J42",
@@ -88,7 +232,23 @@
       "expect_answer": false,
       "top1_page": "dart/LG화학_2022_20230324001178_[LG화학][정정]사업보고서(2023.03.24)_257",
       "top1_score": 0.6552,
-      "top1_grade": 0
+      "top1_grade": 0,
+      "margin": 0.0273,
+      "top5_scores": [
+        0.6552,
+        0.6279,
+        0.598,
+        0.5718,
+        0.5707
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        0,
+        0,
+        0,
+        2,
+        2
+      ]
     },
     {
       "sample_id": "J04",
@@ -97,7 +257,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(지표로+보는+이슈+75호-20161202)인적자원+국제지표의+시사점_3",
       "top1_score": 0.7852,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0297,
+      "top5_scores": [
+        0.7852,
+        0.7555,
+        0.0254,
+        0.0114,
+        0.0055
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        2,
+        2,
+        1,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J19",
@@ -106,7 +282,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2022년 충청남도 호소환경(생태) 조사 최종보고서(230419)용량조정_57",
       "top1_score": 0.8374,
-      "top1_grade": 0
+      "top1_grade": 0,
+      "margin": 0.013,
+      "top5_scores": [
+        0.8374,
+        0.8244,
+        0.8056,
+        0.8028,
+        0.3587
+      ],
+      "n_distinct_docs": 5,
+      "top5_grades": [
+        0,
+        1,
+        0,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J40",
@@ -115,7 +307,23 @@
       "expect_answer": true,
       "top1_page": "dart/LG화학_2022_20230324001178_[LG화학][정정]사업보고서(2023.03.24)_7",
       "top1_score": 0.8735,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0366,
+      "top5_scores": [
+        0.8735,
+        0.8369,
+        0.7931,
+        0.7395,
+        0.6996
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
     },
     {
       "sample_id": "J13",
@@ -124,7 +332,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/230307_기업 직업훈련 활성화를 위한 규제혁신 방안_인쇄용_최종인쇄본_8",
       "top1_score": 0.9198,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0364,
+      "top5_scores": [
+        0.9198,
+        0.8834,
+        0.838,
+        0.8126,
+        0.5321
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        2,
+        1,
+        2,
+        2,
+        null
+      ]
     },
     {
       "sample_id": "J22",
@@ -133,7 +357,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(세미나_130402)2013+나로호+성공+이후,+우주강국+도약을+위한+전략+심포지엄_1",
       "top1_score": 0.9278,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.8591,
+      "top5_scores": [
+        0.9278,
+        0.0687,
+        0.006,
+        0.0013,
+        0.001
+      ],
+      "n_distinct_docs": 5,
+      "top5_grades": [
+        2,
+        null,
+        1,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J29",
@@ -142,7 +382,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/20151008_2030개발의제+시대의+지속가능발전목표자(SDGs)와+이행전략_자료집(최종)_6",
       "top1_score": 0.9353,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.181,
+      "top5_scores": [
+        0.9353,
+        0.7543,
+        0.4283,
+        0.4107,
+        0.2864
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        1,
+        1,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J14",
@@ -151,7 +407,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2022-17 전라남도 은둔형 외톨이 지원 기본계획 연구 보고서(최종)_31",
       "top1_score": 0.9394,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0068,
+      "top5_scores": [
+        0.9394,
+        0.9326,
+        0.9144,
+        0.8924,
+        0.8524
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        null,
+        2,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J41",
@@ -160,7 +432,23 @@
       "expect_answer": false,
       "top1_page": "dart/00258801_2023_20240320000393_[카카오][정정]사업보고서(2024.03.20)_158",
       "top1_score": 0.9588,
-      "top1_grade": 0
+      "top1_grade": 0,
+      "margin": 0.0003,
+      "top5_scores": [
+        0.9588,
+        0.9585,
+        0.8835,
+        0.5172,
+        0.3944
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J30",
@@ -169,7 +457,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2024 독서진흥에 관한 연차보고서(최종) (1)_13",
       "top1_score": 0.9637,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0075,
+      "top5_scores": [
+        0.9637,
+        0.9562,
+        0.9194,
+        0.8852,
+        0.8282
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        1,
+        1,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J37",
@@ -178,7 +482,23 @@
       "expect_answer": true,
       "top1_page": "dart/삼성전자_2024_20250311001085_[삼성전자]사업보고서(2025.03.11)_51",
       "top1_score": 0.9672,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.1093,
+      "top5_scores": [
+        0.9672,
+        0.8579,
+        0.7965,
+        0.7208,
+        0.7149
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ]
     },
     {
       "sample_id": "J35",
@@ -187,7 +507,23 @@
       "expect_answer": true,
       "top1_page": "dart/LG화학_2023_20240315000957_[LG화학]사업보고서(2024.03.15)_353",
       "top1_score": 0.9687,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0026,
+      "top5_scores": [
+        0.9687,
+        0.9661,
+        0.9495,
+        0.9479,
+        0.9027
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J36",
@@ -196,7 +532,23 @@
       "expect_answer": true,
       "top1_page": "dart/00258801_2023_20240418000375_[카카오][정정]사업보고서(2024.04.18)_5",
       "top1_score": 0.9689,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.1508,
+      "top5_scores": [
+        0.9689,
+        0.8181,
+        0.7521,
+        0.7021,
+        0.6456
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J16",
@@ -205,7 +557,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/20151008_2030개발의제+시대의+지속가능발전목표자(SDGs)와+이행전략_자료집(최종)_16",
       "top1_score": 0.9731,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.3355,
+      "top5_scores": [
+        0.9731,
+        0.6376,
+        0.0406,
+        0.0384,
+        0.0069
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        1,
+        1,
+        null,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J10",
@@ -214,7 +582,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서+260호-20150729)국가연구개발사업+기술료+제도의+현황과+개선과제_50",
       "top1_score": 0.9738,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.3529,
+      "top5_scores": [
+        0.9738,
+        0.6209,
+        0.4243,
+        0.4027,
+        0.4017
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        2,
+        1,
+        1,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J01",
@@ -223,7 +607,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/230103_강원도_습지보호지역_보전및활용계획_수립_최종보고서_최적화_168",
       "top1_score": 0.974,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0214,
+      "top5_scores": [
+        0.974,
+        0.9526,
+        0.9491,
+        0.9486,
+        0.9268
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        1,
+        2,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J28",
@@ -232,7 +632,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2024년 춘천시 사용종료매립장(신동  장학리) 주변환경영향 종합조사 용역 보고서_88",
       "top1_score": 0.9769,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0258,
+      "top5_scores": [
+        0.9769,
+        0.9511,
+        0.9464,
+        0.846,
+        0.1786
+      ],
+      "n_distinct_docs": 5,
+      "top5_grades": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
     },
     {
       "sample_id": "J05",
@@ -241,7 +657,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2022-17. 최종보고서(스포츠파크 조성)_19",
       "top1_score": 0.9784,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0147,
+      "top5_scores": [
+        0.9784,
+        0.9637,
+        0.9591,
+        0.9285,
+        0.1961
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        2,
+        2,
+        2,
+        2,
+        1
+      ]
     },
     {
       "sample_id": "J12",
@@ -250,7 +682,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2023년 어린이집 이용자 만족도 조사_41",
       "top1_score": 0.9823,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0032,
+      "top5_scores": [
+        0.9823,
+        0.9791,
+        0.9758,
+        0.9595,
+        0.9513
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        1,
+        2,
+        1,
+        1
+      ]
     },
     {
       "sample_id": "J11",
@@ -259,7 +707,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/생활법령/해외여행자 _ 해외여행 준비하기 _ 그 밖의 준비사항 _ 병무사항 확인 (본문) _ 찾기쉬운 생활법령정보_2",
       "top1_score": 0.9845,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.1626,
+      "top5_scores": [
+        0.9845,
+        0.8219,
+        0.5873,
+        0.2655,
+        0.0933
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        2,
+        1,
+        1,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J32",
@@ -268,7 +732,23 @@
       "expect_answer": true,
       "top1_page": "dart/00258801_2024_20250324000901_[카카오][정정]사업보고서(2025.03.24)_502",
       "top1_score": 0.9868,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0486,
+      "top5_scores": [
+        0.9868,
+        0.9382,
+        0.9189,
+        0.7841,
+        0.711
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J02",
@@ -277,7 +757,23 @@
       "expect_answer": true,
       "top1_page": "assembly_raw/국회입법조사처제공자료통합API/(이슈와논점+1935호-20220411)음식배달산업+현황과+배달라이더의+소득자료+제출에+따른+쟁점_4",
       "top1_score": 0.9888,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.273,
+      "top5_scores": [
+        0.9888,
+        0.7158,
+        0.6665,
+        0.3636,
+        0.0083
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        2,
+        1,
+        1,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J38",
@@ -286,7 +782,23 @@
       "expect_answer": true,
       "top1_page": "dart/00266961_2024_20250318000645_[NAVER]사업보고서(2025.03.18)_410",
       "top1_score": 0.9901,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0172,
+      "top5_scores": [
+        0.9901,
+        0.9729,
+        0.9674,
+        0.9504,
+        0.8353
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ]
     },
     {
       "sample_id": "J34",
@@ -295,7 +807,23 @@
       "expect_answer": true,
       "top1_page": "dart/00266961_2024_20250318000645_[NAVER]사업보고서(2025.03.18)_435",
       "top1_score": 0.9917,
-      "top1_grade": 0
+      "top1_grade": 0,
+      "margin": 0.0089,
+      "top5_scores": [
+        0.9917,
+        0.9828,
+        0.7225,
+        0.6907,
+        0.3725
+      ],
+      "n_distinct_docs": 4,
+      "top5_grades": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "sample_id": "J26",
@@ -304,7 +832,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2024아랫장 웃장 폐기물 수집운반처리 원가산정_77",
       "top1_score": 0.9934,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0345,
+      "top5_scores": [
+        0.9934,
+        0.9589,
+        0.6942,
+        0.2379,
+        0.195
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        2,
+        0,
+        1,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J39",
@@ -313,7 +857,23 @@
       "expect_answer": true,
       "top1_page": "dart/현대자동차_2024_20250312001148_[현대자동차]사업보고서(2025.03.12)_36",
       "top1_score": 0.996,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0054,
+      "top5_scores": [
+        0.996,
+        0.9906,
+        0.9661,
+        0.9087,
+        0.8592
+      ],
+      "n_distinct_docs": 5,
+      "top5_grades": [
+        2,
+        0,
+        1,
+        1,
+        0
+      ]
     },
     {
       "sample_id": "J15",
@@ -322,7 +882,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/생활법령/병역의무자(상근·승선근무 예비역) _ 상근예비역 _ 상근예비역소집 대상 및 선발방법 _ 소집 대상 (본문) _ 찾기쉬운 생활법령정보_1",
       "top1_score": 0.9961,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0054,
+      "top5_scores": [
+        0.9961,
+        0.9907,
+        0.9782,
+        0.8443,
+        0.7722
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        2,
+        1,
+        1,
+        1,
+        2
+      ]
     },
     {
       "sample_id": "J33",
@@ -331,7 +907,23 @@
       "expect_answer": true,
       "top1_page": "dart/현대자동차_2024_20250312001148_[현대자동차]사업보고서(2025.03.12)_36",
       "top1_score": 0.9961,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0002,
+      "top5_scores": [
+        0.9961,
+        0.9959,
+        0.9754,
+        0.9636,
+        0.9606
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        2,
+        0,
+        0,
+        1
+      ]
     },
     {
       "sample_id": "J06",
@@ -340,7 +932,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/[최종] 2021회계연도 성인지결산서 종합분석 연구_54",
       "top1_score": 0.9983,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0017,
+      "top5_scores": [
+        0.9983,
+        0.9966,
+        0.9962,
+        0.9954,
+        0.9925
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        2,
+        1,
+        1,
+        null
+      ]
     },
     {
       "sample_id": "J31",
@@ -349,7 +957,23 @@
       "expect_answer": true,
       "top1_page": "dart/삼성전자_2023_20240312000736_[삼성전자]사업보고서(2024.03.12)_298",
       "top1_score": 0.9984,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.0753,
+      "top5_scores": [
+        0.9984,
+        0.9231,
+        0.8261,
+        0.5888,
+        0.5762
+      ],
+      "n_distinct_docs": 3,
+      "top5_grades": [
+        2,
+        0,
+        0,
+        0,
+        1
+      ]
     },
     {
       "sample_id": "J03",
@@ -358,7 +982,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2024년 도시가스 공급비용 산정용역_최종보고서_25",
       "top1_score": 0.9988,
-      "top1_grade": 2
+      "top1_grade": 2,
+      "margin": 0.001,
+      "top5_scores": [
+        0.9988,
+        0.9978,
+        0.9963,
+        0.9924,
+        0.9904
+      ],
+      "n_distinct_docs": 2,
+      "top5_grades": [
+        2,
+        1,
+        null,
+        1,
+        2
+      ]
     },
     {
       "sample_id": "J21",
@@ -367,7 +1007,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/230628 2022 동구 성인지 통계_428",
       "top1_score": 0.999,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0032,
+      "top5_scores": [
+        0.999,
+        0.9958,
+        0.994,
+        0.9624,
+        0.9605
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        1,
+        1,
+        null,
+        null
+      ]
     },
     {
       "sample_id": "J18",
@@ -376,7 +1032,23 @@
       "expect_answer": true,
       "top1_page": "public_pdf/prism/2023년(2022년 실적) 충청북도 출연기관 경영평가 종합보고서_41",
       "top1_score": 0.9998,
-      "top1_grade": 1
+      "top1_grade": 1,
+      "margin": 0.0,
+      "top5_scores": [
+        0.9998,
+        0.9998,
+        0.9998,
+        0.9998,
+        0.9997
+      ],
+      "n_distinct_docs": 1,
+      "top5_grades": [
+        1,
+        2,
+        1,
+        null,
+        1
+      ]
     }
   ],
   "ungraded_top1": []
