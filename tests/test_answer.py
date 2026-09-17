@@ -61,3 +61,15 @@ def test_abstention_with_only_short_filler_is_kept():
 def test_answer_without_phrase_is_unchanged():
     ans = "정수기는 단체급식용, 저장형, 수도직결형으로 나뉩니다."
     assert strip_contradictory_abstention(ans) == ans
+
+
+def test_same_line_trailing_abstention_is_removed():
+    # D-24 실측: 줄바꿈 없이 같은 문단 안에서 실제 답 뒤에 문장만 바꿔 기권 문구를 붙인 경우.
+    # 줄 단위 제거로는 문장 전체(실제 답 포함)가 함께 지워져 길이 안전장치가 오작동했었다.
+    ans = (
+        "이는 교육 접근성과 질 향상에 기여하며, 모든 학생이 공정한 교육 기회를 받을 수 "
+        "있도록 하는 데 중점을 둡니다. " + ABSTAIN_PHRASE + "."
+    )
+    out = strip_contradictory_abstention(ans)
+    assert ABSTAIN_PHRASE not in out
+    assert "교육 접근성" in out

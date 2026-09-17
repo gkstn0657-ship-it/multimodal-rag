@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import re
 import unicodedata
 from dataclasses import dataclass
 
@@ -29,19 +30,25 @@ SYSTEM_PROMPT = (
 
 
 def strip_contradictory_abstention(answer: str, min_content_chars: int = 40) -> str:
-    """실제 답 뒤에 붙은 기권 문장을 제거한다 (D-13).
+    """실제 답 뒤에 붙은 기권 문장을 제거한다 (D-13, D-24로 문장 단위 처리로 보강).
 
-    답변에 기권 문구 외의 내용이 min_content_chars 이상 있으면, 기권 문구가 들어간 줄만 지운다.
+    답변에 기권 문구 외의 내용이 min_content_chars 이상 있으면, 기권 문구가 들어간 문장만 지운다.
     답이 기권 문구뿐이면(정상 기권) 그대로 둔다.
+
+    D-24 실측: 줄 단위(splitlines)로만 자르면, VLM이 실제 답을 쓴 뒤 같은 줄/문단 안에서 문장만
+    바꿔 기권 문구를 이어 붙인 경우(예: "...중점을 둡니다. 문서에서 찾을 수 없습니다.") 그 줄 전체가
+    "기권 문구가 포함된 줄"로 통째 제거되어 content 길이가 min_content_chars 밑으로 떨어지고,
+    그 결과 안전장치(정상 기권으로 간주)가 발동해 원본이 그대로 반환되는 사각지대가 있었다.
+    줄이 아니라 문장(마침표·물음표·느낌표·줄바꿈 뒤) 단위로 나눠 기권 문구가 든 문장만 제거한다.
     """
     if ABSTAIN_PHRASE not in answer:
         return answer
-    lines = answer.splitlines()
-    kept = [ln for ln in lines if ABSTAIN_PHRASE not in ln]
+    sentences = re.split(r"(?<=[.!?\n])\s*", answer)
+    kept = [s for s in sentences if ABSTAIN_PHRASE not in s]
     content = "".join(kept).strip()
     if len(content) < min_content_chars:
         return answer  # 실질적 답이 없으면 정상 기권으로 본다
-    return "\n".join(kept).strip()
+    return "".join(kept).strip()
 
 
 @dataclass
