@@ -112,25 +112,45 @@
         "gold_in_top5": 0.8
       }
     },
-    "dart": {
+    "dart_dense": {
       "all": {
         "n": 10,
-        "ndcg@5": 0.878352518843004,
+        "ndcg@5": 0.6382139316426572,
         "recall@5": 0.3,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
       },
       "dart/dart": {
         "n": 10,
-        "ndcg@5": 0.878352518843004,
+        "ndcg@5": 0.6382139316426572,
         "recall@5": 0.3,
+        "irrelevant@5": 0.62,
+        "gold_in_top5": null
+      }
+    },
+    "dart_hybrid": {
+      "all": {
+        "n": 10,
+        "ndcg@5": 0.8421372098023563,
+        "recall@5": 0.4,
+        "irrelevant@5": 0.62,
+        "gold_in_top5": null
+      },
+      "dart/dart": {
+        "n": 10,
+        "ndcg@5": 0.8421372098023563,
+        "recall@5": 0.4,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
       }
     }
   },
   "no_answer_queries": {
-    "dart": {
+    "dart_dense": {
+      "n": 2,
+      "false_positive": 1
+    },
+    "dart_hybrid": {
       "n": 2,
       "false_positive": 1
     }

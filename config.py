@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     # --- 검색 파라미터 ---
     top_k_candidates: int = 10
     top_n_after_rerank: int = 5
+    # D-20: BM25 하이브리드(RRF 병합). 저장소에 bm25.npz가 없으면 켜져 있어도 밀집 검색만 수행된다.
+    hybrid_enabled: bool = True
+    rrf_k: int = 60  # RRF 표준값(1/(k+rank)). 작을수록 1위 쏠림이 커짐
     answer_image_cap: int = 2  # D-02: 4k 컨텍스트 제약으로 원본 이미지 최대 2장만 투입
     answer_image_max_rank: int = 2  # D-11: 재랭킹 상위 이 순위 안의 청크만 이미지로 투입 (5위 무관 이미지가 답을 망친 실측)
     answer_max_tokens: int = 500

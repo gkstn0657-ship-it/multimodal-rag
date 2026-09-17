@@ -32,8 +32,10 @@ SYSTEMS = {
         "v2_caption": Path("data/vector_store_variant_v2_caption"),
         "baseline_ocr": Path("data/vector_store_baseline_ocr"),
     },
-    "dart": {"dart": Path("data/vector_store_dart")},
+    # D-20: dart_dense(하이브리드 끔) vs dart_hybrid(BM25 RRF 병합)로 회사·연도 혼동 개선을 확인한다.
+    "dart": {"dart_dense": Path("data/vector_store_dart"), "dart_hybrid": Path("data/vector_store_dart")},
 }
+HYBRID_OVERRIDE = {"dart_dense": False, "dart_hybrid": True}
 
 
 def run_system(store: Path, query: str) -> list:
@@ -56,10 +58,11 @@ def main() -> None:
                 print(f"{name}: 저장소 없음, 건너뜀 ({store})")
                 continue
             settings.vector_store_dir = store
+            settings.hybrid_enabled = HYBRID_OVERRIDE.get(name, settings.hybrid_enabled)
             es.get_store(force_reload=True)
             for s in items:
                 per_query_ranked[s["sample_id"]][name] = retrieve(s["query"])
-            print(f"{corpus}/{name}: {len(items)}문항 완료", flush=True)
+            print(f"{corpus}/{name}: {len(items)}문항 완료 (hybrid={settings.hybrid_enabled})", flush=True)
 
     for s in sample:
         ranked = per_query_ranked[s["sample_id"]]
