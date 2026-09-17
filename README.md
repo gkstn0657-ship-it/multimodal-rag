@@ -72,7 +72,8 @@ uv run python -m indexing.run_index
 # 3) BM25 인덱스 (문서명 접두어 포함)
 uv run python -m indexing.bm25_index data/vector_store --prefix
 
-# 4) 서버 실행
+# 4) 서버 실행 — http://localhost:8000 에 테스트 화면이 뜬다
+#    (질의 → 재랭킹 상위 5페이지의 텍스트·원본 이미지·점수 + 생성 답변을 함께 표시)
 uv run uvicorn servers.main:app --port 8000
 ```
 

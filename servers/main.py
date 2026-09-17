@@ -9,10 +9,14 @@ Phase 5 요구사항 반영:
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from config import settings
 from servers import metrics
 from servers.answer import generate_from_chunks
 from servers.retrieve import rerank, search
@@ -24,14 +28,34 @@ logger = logging.getLogger("multimodal_rag")
 app = FastAPI(title="multimodal-rag")
 _vlm_client = VLMClient()
 
+# 원본 페이지 이미지를 브라우저에서 바로 볼 수 있게 정적 서빙 (테스트 화면용, D-25)
+settings.rendered_pages_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/pages", StaticFiles(directory=str(settings.rendered_pages_dir)), name="pages")
+
+_STATIC_DIR = Path(__file__).resolve().parent / "static"
+
+
+@app.get("/")
+def index() -> FileResponse:
+    return FileResponse(str(_STATIC_DIR / "index.html"))
+
 
 class AskRequest(BaseModel):
     question: str
 
 
+class ChunkOut(BaseModel):
+    page_id: str
+    route: str
+    score: float
+    text: str
+    image_url: str | None
+
+
 class AskResponse(BaseModel):
     answer: str
     sources: list[str]
+    chunks: list[ChunkOut]
     timing: dict
 
 
@@ -65,10 +89,18 @@ def ask(req: AskRequest) -> AskResponse:
         chunks = rerank(req.question, candidates)
     timing.rerank_sec = elapsed_rerank()
 
+    def _to_chunk_out(c) -> ChunkOut:
+        image_url = None
+        if c.image_path:
+            name = Path(c.image_path).name
+            if (settings.rendered_pages_dir / name).exists():
+                image_url = f"/pages/{name}"
+        return ChunkOut(page_id=c.page_id, route=c.route, score=c.score, text=c.text, image_url=image_url)
+
     if not chunks:
         timing.total_sec = timing.retrieve_sec + timing.rerank_sec
         metrics.record(timing)
-        return AskResponse(answer="문서에서 찾을 수 없습니다.", sources=[], timing=timing.as_dict())
+        return AskResponse(answer="문서에서 찾을 수 없습니다.", sources=[], chunks=[], timing=timing.as_dict())
 
     if not _vlm_client.ping():
         raise HTTPException(status_code=503, detail="VLM 서버가 응답하지 않습니다. Ollama 서버 상태를 확인하세요.")
@@ -83,4 +115,9 @@ def ask(req: AskRequest) -> AskResponse:
     timing.total_sec = timing.retrieve_sec + timing.rerank_sec + timing.generate_sec
     metrics.record(timing)
 
-    return AskResponse(answer=result.answer, sources=result.sources, timing=timing.as_dict())
+    return AskResponse(
+        answer=result.answer,
+        sources=result.sources,
+        chunks=[_to_chunk_out(c) for c in chunks],
+        timing=timing.as_dict(),
+    )
