@@ -1,0 +1,201 @@
+<title>표지 함정</title>
+<meta name="description" content="검색은 정답 페이지를 찾아내지만, 그 페이지의 86%가 제목뿐인 표지라 답을 만들지 못하는 과정을 한 장면으로 보여준다">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+  :root{
+    --bg:#f7f5f1; --surface:#ffffff; --surface-2:#efece4; --text:#1c1a17; --muted:#6b6459;
+    --line:#e2ddd2;
+    --good:#2f6b4f; --good-soft:#e1ece3;
+    --bad:#b4402a; --bad-soft:#f6e3dd;
+    --warn:#a9761f; --warn-soft:#f2e7d3;
+    --shadow: 0 1px 2px rgba(28,26,23,0.06), 0 10px 28px -14px rgba(28,26,23,0.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17181a; --surface:#1f2124; --surface-2:#26282c; --text:#eae7e0; --muted:#9b968c;
+      --line:#34363b;
+      --good:#7fb894; --good-soft:#20302a;
+      --bad:#e08a72; --bad-soft:#3a2521;
+      --warn:#e0b96e; --warn-soft:#392e1a;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 28px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17181a; --surface:#1f2124; --surface-2:#26282c; --text:#eae7e0; --muted:#9b968c;
+    --line:#34363b;
+    --good:#7fb894; --good-soft:#20302a;
+    --bad:#e08a72; --bad-soft:#3a2521;
+    --warn:#e0b96e; --warn-soft:#392e1a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 28px -14px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"IBM Plex Sans KR","Noto Sans KR",-apple-system,sans-serif;
+    padding:30px 16px 56px;
+  }
+  .wrap{max-width:720px; margin:0 auto;}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums;}
+
+  .eyebrow{
+    font-size:12.5px; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);
+    font-weight:600; text-align:center; margin-bottom:8px;
+  }
+  h1{
+    font-family:"Gowun Batang",serif; font-size:clamp(24px,5.5vw,32px); font-weight:700;
+    text-align:center; margin:0 0 8px; text-wrap:balance;
+  }
+  .sub{text-align:center; color:var(--muted); font-size:14px; margin:0 0 40px;}
+
+  .scene{display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .panel{
+    width:100%; max-width:460px; background:var(--surface); border:1px solid var(--line);
+    border-radius:16px; box-shadow:var(--shadow); padding:22px 22px 20px; position:relative;
+  }
+  .panel .ptag{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:700; color:var(--muted);
+    letter-spacing:0.04em; margin-bottom:10px;
+  }
+  .connector{display:flex; flex-direction:column; align-items:center; padding:8px 0; gap:2px;}
+  .connector .line{width:2px; height:22px; background:var(--line);}
+  .connector .arrow{color:var(--muted); font-size:18px; line-height:1;}
+
+  /* panel 1: query + search success */
+  .query-bubble{
+    background:var(--surface-2); border-radius:12px 12px 12px 3px; padding:10px 14px;
+    font-size:14px; display:inline-block; margin-bottom:16px;
+  }
+  .found-row{display:flex; align-items:center; gap:14px;}
+  .found-badge{
+    flex-shrink:0; width:56px; height:56px; border-radius:50%; background:var(--good-soft);
+    border:2px solid var(--good); display:flex; align-items:center; justify-content:center;
+    font-size:24px;
+  }
+  .found-text{font-size:14px; line-height:1.55;}
+  .found-text b{color:var(--good); font-family:"IBM Plex Mono",monospace; font-size:15px;}
+
+  /* panel 2: the empty page mockup */
+  .page-mock{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:8px;
+    aspect-ratio:210/280; width:170px; margin:4px auto 14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px; padding:14px; position:relative;
+  }
+  .page-mock .ch{font-size:11px; color:var(--muted); letter-spacing:0.04em;}
+  .page-mock .title{
+    font-family:"Gowun Batang",serif; font-weight:700; font-size:16px; text-align:center;
+    line-height:1.4;
+  }
+  .page-mock .blank-note{
+    position:absolute; bottom:14px; left:14px; right:14px; text-align:center;
+    font-size:10px; color:var(--muted); border-top:1px dashed var(--line); padding-top:8px;
+  }
+  .stamp{
+    position:absolute; top:14px; right:-10px; transform:rotate(8deg);
+    background:var(--bad-soft); color:var(--bad); border:2px solid var(--bad);
+    font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:11px;
+    padding:3px 8px; border-radius:6px; letter-spacing:0.02em;
+  }
+  .panel2-caption{font-size:14px; text-align:center; color:var(--text);}
+  .panel2-caption .pct{font-family:"IBM Plex Mono",monospace; font-weight:700; color:var(--bad); font-size:15px;}
+
+  /* waffle grid for the 86% stat */
+  .waffle{
+    display:grid; grid-template-columns:repeat(10,1fr); gap:4px; max-width:280px; margin:14px auto 0;
+  }
+  .waffle .dot{
+    aspect-ratio:1; border-radius:3px; background:var(--bad); opacity:0.85;
+  }
+  .waffle .dot.ok{background:var(--good);}
+  .waffle-legend{
+    display:flex; justify-content:center; gap:18px; margin-top:10px; font-size:12px; color:var(--muted);
+  }
+  .waffle-legend span{display:flex; align-items:center; gap:6px;}
+  .swatch{width:10px; height:10px; border-radius:3px; display:inline-block;}
+
+  /* panel 3: the failed answer */
+  .answer-bubble{
+    background:var(--bad-soft); border:1px solid var(--bad); border-radius:3px 12px 12px 12px;
+    padding:12px 16px; font-size:14px; display:flex; align-items:center; gap:10px; margin:0 auto;
+    max-width:340px;
+  }
+  .answer-bubble .x{color:var(--bad); font-size:20px; font-weight:700;}
+
+  .verdict{
+    margin-top:34px; text-align:center; font-size:15px; line-height:1.7; color:var(--text);
+    max-width:52ch; margin-left:auto; margin-right:auto;
+  }
+  .verdict b{color:var(--bad);}
+
+  footer{margin-top:36px; text-align:center; font-size:12px; color:var(--muted);}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">이미지 경로 검색 · 표지 함정</div>
+  <h1>검색은 맞았는데, 답은 없다</h1>
+  <p class="sub">"제3장 재정계획의 목표는?"이라고 물었을 때 실제로 벌어지는 일</p>
+
+  <div class="scene">
+
+    <div class="panel">
+      <div class="ptag">STEP 1 · 검색</div>
+      <div class="query-bubble">"제3장에서 재정계획 목표는 무엇인가요?"</div>
+      <div class="found-row">
+        <div class="found-badge">✓</div>
+        <div class="found-text">정답 페이지를 top-5 안에서 찾아낸다.<br>질의 <b>10건 중 8건</b>이 성공한다.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow">▾</div></div>
+
+    <div class="panel">
+      <div class="ptag">STEP 2 · 그 페이지를 열어보면</div>
+      <div class="page-mock">
+        <span class="stamp">내용 없음</span>
+        <div class="ch">제 3 장</div>
+        <div class="title">재정계획</div>
+        <div class="blank-note">이 아래로는 수치도, 설명도 없음</div>
+      </div>
+      <p class="panel2-caption">
+        찾아낸 페이지 <b>10장 중 8~9장이</b> 제목만 있는<br>
+        표지·구분지다 — <span class="pct">86%</span>가 이런 페이지다.
+      </p>
+      <div class="waffle" id="waffle"></div>
+      <div class="waffle-legend">
+        <span><i class="swatch" style="background:var(--bad)"></i>제목만 (86%)</span>
+        <span><i class="swatch" style="background:var(--good)"></i>실제 내용 있음 (14%)</span>
+      </div>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow">▾</div></div>
+
+    <div class="panel" style="text-align:center;">
+      <div class="ptag" style="text-align:left;">STEP 3 · 답변 생성</div>
+      <div class="answer-bubble">
+        <span class="x">✕</span>
+        <span>"문서에서 찾을 수 없습니다."</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="verdict">
+    검색이 틀린 게 아니다. <b>페이지 자체에 담긴 정보가 없어서</b> 생기는 문제다.
+    그래서 캡션을 더 잘 쓰거나 모델을 바꿔도 이 격차는 좁혀지지 않는다.
+  </p>
+
+  <footer class="mono">SDS KoPub · 이미지 경로 997장 실측 · 2026-09-17</footer>
+</div>
+
+<script>
+  (function(){
+    var w = document.getElementById('waffle');
+    var html = '';
+    for (var i = 0; i < 100; i++) {
+      html += '<div class="dot' + (i < 14 ? ' ok' : '') + '"></div>';
+    }
+    w.innerHTML = html;
+  })();
+</script>
