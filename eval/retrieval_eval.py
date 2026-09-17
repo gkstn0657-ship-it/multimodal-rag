@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -103,13 +104,27 @@ def evaluate(limit: int | None = None, k: int = max(K_VALUES)) -> tuple[list[Que
     return results, summary
 
 
-def _macro_metrics(results: list[QueryResult]) -> dict:
-    if not results:
+def ndcg_single(rank: int | None, k: int) -> float:
+    """정답이 1개일 때의 nDCG@k. IDCG=1이므로 정답이 k위 안이면 1/log2(rank+1), 아니면 0."""
+    if rank is None or rank > k:
+        return 0.0
+    return 1.0 / math.log2(rank + 1)
+
+
+def metrics_from_ranks(ranks: list[int | None]) -> dict:
+    """정답 순위 목록(없으면 None)에서 Recall@k·nDCG@k·MRR을 계산한다. 두 평가 스크립트가 공유한다."""
+    n = len(ranks)
+    if n == 0:
         return {}
-    metrics = {f"recall@{k}": sum(r.recall_at(k) for r in results) / len(results) for k in K_VALUES}
-    metrics["mrr"] = sum(r.reciprocal_rank() for r in results) / len(results)
-    metrics["n"] = len(results)
+    metrics = {f"recall@{k}": sum(1 for r in ranks if r is not None and r <= k) / n for k in K_VALUES}
+    metrics.update({f"ndcg@{k}": sum(ndcg_single(r, k) for r in ranks) / n for k in K_VALUES})
+    metrics["mrr"] = sum(1.0 / r for r in ranks if r) / n
+    metrics["n"] = n
     return metrics
+
+
+def _macro_metrics(results: list[QueryResult]) -> dict:
+    return metrics_from_ranks([r.rank_of_answer() for r in results])
 
 
 def summarize(results: list[QueryResult]) -> dict:

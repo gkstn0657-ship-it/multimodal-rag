@@ -20,19 +20,31 @@ from pathlib import Path
 
 from config import settings
 import indexing.embed_store as es
-from eval.retrieval_eval import K_VALUES, run_search_topk
+from eval.retrieval_eval import K_VALUES, metrics_from_ranks, run_search_topk
 
 QUERIES = Path("eval/synth_queries_image_pages.jsonl")
+# 비교 대상. 변형 저장소는 eval/build_variant_store.py로 만든다.
 STORES = {
-    "ours_caption": Path("data/vector_store"),
+    "v3_caption_ocr": Path("data/vector_store_variant_v3_caption_ocr"),  # D-15 결정 반영본
+    "v2_caption": Path("data/vector_store"),  # D-07 이후 운영 저장소(캡션 단독)
+    "v2_caption_ocr": Path("data/vector_store_variant_v2_caption_ocr"),
+    "v1_caption": Path("data/vector_store_variant_v1_caption"),
+    "v1_caption_ocr": Path("data/vector_store_variant_v1_caption_ocr"),
     "baseline_ocr": Path("data/vector_store_baseline_ocr"),
 }
+OURS = "v3_caption_ocr"
+BASELINE = "baseline_ocr"
+REPORT = Path("eval/synth_query_report_v3.json")
 
 
 def load_queries() -> list[dict]:
     rows = [json.loads(l) for l in QUERIES.open(encoding="utf-8")]
-    # 질문이 비었거나 페이지를 가리키는 표현이 남은 것은 제외
-    bad = ("이 페이지", "이 문서", "위 표", "위 그림")
+    # 질문이 비었거나 페이지를 가리키는 지시어가 남은 것은 제외(검색 질의로 성립하지 않음).
+    # 2026-09-17 보강: 판정 표본 추출 시 "이 도서/이 그림/N페이지의" 같은 변형이 걸러지지 않은 것을 발견.
+    bad = (
+        "이 페이지", "이 문서", "위 표", "위 그림", "이 도서", "이 그림", "이 주제", "이 표", "페이지의",
+        "이 자료", "이 사진", "본 자료", "이 연구진", "이 보고서", "본 보고서",
+    )
     return [r for r in rows if r["query"].strip() and not any(b in r["query"] for b in bad)]
 
 
@@ -46,11 +58,7 @@ def evaluate_store(name: str, path: Path, queries: list[dict], k: int) -> dict:
             ranks.append(ranked.index(q["page_id"]) + 1)
         except ValueError:
             ranks.append(None)
-    n = len(ranks)
-    out = {f"recall@{kk}": sum(1 for r in ranks if r and r <= kk) / n for kk in K_VALUES}
-    out["mrr"] = sum(1.0 / r for r in ranks if r) / n
-    out["n"] = n
-    return out, ranks
+    return metrics_from_ranks(ranks), ranks
 
 
 def main() -> None:
@@ -60,14 +68,17 @@ def main() -> None:
     report: dict = {"n_queries": len(queries), "stores": {}}
     all_ranks: dict[str, list] = {}
     for name, path in STORES.items():
+        if not (path / "vectors.npy").exists():
+            print(f"{name}: 저장소 없음, 건너뜀 ({path})")
+            continue
         metrics, ranks = evaluate_store(name, path, queries, k)
         report["stores"][name] = metrics
         all_ranks[name] = ranks
         print(name, json.dumps(metrics, ensure_ascii=False))
 
-    # 문항별 승패: 캡션이 더 높은 순위(작은 수)면 ours 승
+    # 문항별 승패: OURS가 더 높은 순위(작은 수)면 ours 승
     wins = defaultdict(int)
-    for a, b in zip(all_ranks["ours_caption"], all_ranks["baseline_ocr"]):
+    for a, b in zip(all_ranks[OURS], all_ranks[BASELINE]):
         ra = a or 10**6
         rb = b or 10**6
         if ra < rb:
@@ -76,14 +87,15 @@ def main() -> None:
             wins["baseline_better"] += 1
         else:
             wins["tie"] += 1
+    report["compared"] = {"ours": OURS, "baseline": BASELINE}
     report["per_query_wins"] = dict(wins)
     report["per_query_ranks"] = [
-        {"page_id": q["page_id"], "query": q["query"], "ours": a, "baseline": b}
-        for q, a, b in zip(queries, all_ranks["ours_caption"], all_ranks["baseline_ocr"])
+        {"page_id": q["page_id"], "query": q["query"], **{name: r[i] for name, r in all_ranks.items()}}
+        for i, q in enumerate(queries)
     ]
-    Path("eval/synth_query_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print("승패:", dict(wins))
-    print("저장: eval/synth_query_report.json")
+    print(f"저장: {REPORT}")
 
 
 if __name__ == "__main__":

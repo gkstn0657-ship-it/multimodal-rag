@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     vlm_model: str = "qwen2.5vl:7b"
     vlm_api_key: str = "ollama"
     vlm_num_ctx: int = 4096  # D-02: 8k -> 4k
+    # 캡셔닝은 요청당 약 1,760 프롬프트 토큰 + 400 출력이라 3k로 충분하다. 4k 대비 KV 캐시 112MB 절약.
+    caption_num_ctx: int = 3072
+    # Ollama 추정기가 8GB에서 29층 중 27층만 GPU에 올려(15% CPU) 캡셔닝이 느려졌다. 실측 GPU 여유가
+    # 1.5GB라 전 층을 강제로 올린다. None이면 Ollama 자동 결정에 맡긴다.
+    vlm_num_gpu: int | None = 99
     vlm_timeout_sec: float = 120.0
 
     # --- 임베딩 / 리랭킹 ---

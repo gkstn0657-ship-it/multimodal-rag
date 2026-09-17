@@ -1,0 +1,399 @@
+{
+  "seed": 20260917,
+  "n": 42,
+  "items": [
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "text",
+      "qa_id": "public_pdf/prism/230103_강원도_습지보호지역_보전및활용계획_수립_최종보고서_최적화_38",
+      "query": "습지보호지역의 보전과 관리 체계 기능, 이익",
+      "gold_page_id": "public_pdf/prism/230103_강원도_습지보호지역_보전및활용계획_수립_최종보고서_최적화_38",
+      "expect_answer": true,
+      "sample_id": "J01"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "text",
+      "qa_id": "assembly_raw/국회입법조사처제공자료통합API/(이슈와논점+1935호-20220411)음식배달산업+현황과+배달라이더의+소득자료+제출에+따른+쟁점_4",
+      "query": "라이더가 여러 배달 플랫폼에 소속될 경우 세금 정산 절차나 의무가 어떻게 달라질 수 있는지 알려주세요. 연말정산 방법도 설명하세요.",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(이슈와논점+1935호-20220411)음식배달산업+현황과+배달라이더의+소득자료+제출에+따른+쟁점_4",
+      "expect_answer": true,
+      "sample_id": "J02"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "text",
+      "qa_id": "public_pdf/prism/2024년 도시가스 공급비용 산정용역_최종보고서_25",
+      "query": "도시가스 공급비용을 산정할 때 영업외수익과 영업외비용은 어떤 기준에 따라 원가 반영 여부가 결정되며, 특정 항목들은 어떻게 처리되나요?",
+      "gold_page_id": "public_pdf/prism/2024년 도시가스 공급비용 산정용역_최종보고서_25",
+      "expect_answer": true,
+      "sample_id": "J03"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "text",
+      "qa_id": "assembly_raw/국회입법조사처제공자료통합API/(지표로+보는+이슈+75호-20161202)인적자원+국제지표의+시사점_3",
+      "query": "국제 인재 경쟁력 평가에서 한국이 지속적으로 지적받는 인적자원 관리상의 과제는 무엇이며, 이를 극복하기 위한 주요 방향은 무엇인가요?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(지표로+보는+이슈+75호-20161202)인적자원+국제지표의+시사점_3",
+      "expect_answer": true,
+      "sample_id": "J04"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "text",
+      "qa_id": "public_pdf/prism/2022-17. 최종보고서(스포츠파크 조성)_19",
+      "query": "스포츠기본법의 제정을 통해 스포츠에 대한 정책적 패러다임에 대해 알려주세요",
+      "gold_page_id": "public_pdf/prism/2022-17. 최종보고서(스포츠파크 조성)_19",
+      "expect_answer": true,
+      "sample_id": "J05"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "visual",
+      "qa_id": "public_pdf/prism/[최종] 2021회계연도 성인지결산서 종합분석 연구_63",
+      "query": "2021 결산총괄 자료를 근거로 전체 예산 대비 성인지 사업 집행액 비율이 가장 높은 부문과 가장 낮은 부문을 확인하고 그 의미를 설명해주세요.",
+      "gold_page_id": "public_pdf/prism/[최종] 2021회계연도 성인지결산서 종합분석 연구_63",
+      "expect_answer": true,
+      "sample_id": "J06"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "visual",
+      "qa_id": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서101호-20101130)도시하천의+건천화+방지를+위한+물순환+건전화+대책_24",
+      "query": "정부에서 2000년대 들어 연간 얼마나 많은 수자원을 확보할 수 있는 기술 개발을 목표로 했는지 알려주시고, 세 단계를 모두 완료했을 때 목표했던 총 확보량이 얼마가 되는지도 합산해서 계산해 주시겠습니까?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서101호-20101130)도시하천의+건천화+방지를+위한+물순환+건전화+대책_24",
+      "expect_answer": true,
+      "sample_id": "J07"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "visual",
+      "qa_id": "public_pdf/생활법령/세탁소 운영자 _ 세탁소 운영 _ 세금의 납부 _ 현금영수증 가맹점의 가입 (본문) _ 찾기쉬운 생활법령정보_3",
+      "query": "계산대에 명백히 가맹점 표시가 있는데도 사장이 특정 금액 이상일 경우만 현금 영수증을 발급할 수 있다면서 탈세하는 것 같습니다. 이럴 때 소비자가 할 수 있는 조치와, 업주에게 가는 불이익은 어떻게 되는지 설명해 주세요.",
+      "gold_page_id": "public_pdf/생활법령/세탁소 운영자 _ 세탁소 운영 _ 세금의 납부 _ 현금영수증 가맹점의 가입 (본문) _ 찾기쉬운 생활법령정보_3",
+      "expect_answer": true,
+      "sample_id": "J08"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "visual",
+      "qa_id": "public_pdf/prism/[KDI] 외교부_G20 디지털 신규범_최종보고서_20231030_54",
+      "query": "단일 국가적 차원에서 최근 이슈가 되고 있는 인공지능 윤리 대응을 위해서 만들어진 기관 예시 알려주세요. 이전과 다르게 부여된 역할도 설명해주세요.",
+      "gold_page_id": "public_pdf/prism/[KDI] 외교부_G20 디지털 신규범_최종보고서_20231030_54",
+      "expect_answer": true,
+      "sample_id": "J09"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "visual",
+      "qa_id": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서+260호-20150729)국가연구개발사업+기술료+제도의+현황과+개선과제_50",
+      "query": "한국의 정부납부기술료 제도는 어떤 기준에 따라 운영되며, 미국 등 주요국과는 어떤 점에서 다른가요?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(현안보고서+260호-20150729)국가연구개발사업+기술료+제도의+현황과+개선과제_50",
+      "expect_answer": true,
+      "sample_id": "J10"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "cross",
+      "qa_id": "public_pdf/생활법령/해외여행자 _ 해외여행 준비하기 _ 그 밖의 준비사항 _ 병무사항 확인 (본문) _ 찾기쉬운 생활법령정보_2",
+      "query": "제가 신검은 끝났고 아직 입영일이 지정되지 않은 상태에서 해외여행을 가려고 합니다. 이럴 때 해외여행 허가를 신청할 수 있는지, 만약 신청한다면 어떤 서류나 절차를 따라야 하는지 궁금합니다.",
+      "gold_page_id": "public_pdf/생활법령/해외여행자 _ 해외여행 준비하기 _ 그 밖의 준비사항 _ 병무사항 확인 (본문) _ 찾기쉬운 생활법령정보_2",
+      "expect_answer": true,
+      "sample_id": "J11"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "cross",
+      "qa_id": "assembly_raw/국회입법조사처제공자료통합API/(특별보고서_20231013)초저출산+장기지속+시대의+인구위기+대응+방향(수정)_138",
+      "query": "0~5세 아이들에게 주는 보육비와 유아학비 지원의 내용과 차이점은 무엇인가요? 그리고 2023년부터 새로 시행된 부모급여 지원은 어떤 조건과 금액으로 주어지는지 알려주세요.",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(특별보고서_20231013)초저출산+장기지속+시대의+인구위기+대응+방향(수정)_138",
+      "expect_answer": true,
+      "sample_id": "J12"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "cross",
+      "qa_id": "public_pdf/prism/230307_기업 직업훈련 활성화를 위한 규제혁신 방안_인쇄용_최종인쇄본_8",
+      "query": "직업능력개발 사업에는 어떤 종류가 있으며, 기준 및 각각의 훈련이나 지원 내용에는 어떤 것들이 포함되어 있나요?",
+      "gold_page_id": "public_pdf/prism/230307_기업 직업훈련 활성화를 위한 규제혁신 방안_인쇄용_최종인쇄본_8",
+      "expect_answer": true,
+      "sample_id": "J13"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "cross",
+      "qa_id": "public_pdf/prism/2022-17 전라남도 은둔형 외톨이 지원 기본계획 연구 보고서(최종)_109",
+      "query": "우리나라 지자체 중에 은둔형 외톨이를 지원하는 지제체가 있나요? 사업 내용에는 어떤 상세 내용이 포함되고 사회 계층에 따라 어떻게 도입 예정인지 알려주세요.",
+      "gold_page_id": "public_pdf/prism/2022-17 전라남도 은둔형 외톨이 지원 기본계획 연구 보고서(최종)_109",
+      "expect_answer": true,
+      "sample_id": "J14"
+    },
+    {
+      "corpus": "sds",
+      "source": "sds_kopub_qa",
+      "type": "cross",
+      "qa_id": "public_pdf/생활법령/병역의무자(상근·승선근무 예비역) _ 상근예비역 _ 상근예비역소집 대상 및 선발방법 _ 소집 대상 (본문) _ 찾기쉬운 생활법령정보_1",
+      "query": "저는 군 소요지역에 가족과 2년 이상 계속 거주 중이고, 올해 현역 입영대상자입니다. 상근예비역 우선선발 대상자가 누구인지 설명해 주세요. 만약에 우선선발과 일반선발 대상에 해당하는 조건이 동시에 있을 때는 우선선발이 적용되는지 알고 싶습니다.",
+      "gold_page_id": "public_pdf/생활법령/병역의무자(상근·승선근무 예비역) _ 상근예비역 _ 상근예비역소집 대상 및 선발방법 _ 소집 대상 (본문) _ 찾기쉬운 생활법령정보_1",
+      "expect_answer": true,
+      "sample_id": "J15"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제1세션에서 발표된 내용 중 한국 정부의 주요 역할은 무엇입니까?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/20151008_2030개발의제+시대의+지속가능발전목표자(SDGs)와+이행전략_자료집(최종)_16",
+      "expect_answer": true,
+      "sample_id": "J16"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제10절에서 재정계획의 목표는 무엇인가요?",
+      "gold_page_id": "public_pdf/prism/2040 아산시 환경계획(최종안)_586",
+      "expect_answer": true,
+      "sample_id": "J17"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "2023년 충청북도 출연기관 경영평가 기관별 평가 항목 중 최고점을 받은 기관은 어느 기관인가요?",
+      "gold_page_id": "public_pdf/prism/2023년(2022년 실적) 충청북도 출연기관 경영평가 종합보고서_38",
+      "expect_answer": true,
+      "sample_id": "J18"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제1장에서 연구 방법은 어떤 것인가요?",
+      "gold_page_id": "public_pdf/prism/20250216_제주지역 사회적 격차 실태조사 및 방향성 모색 연구_최종_9",
+      "expect_answer": true,
+      "sample_id": "J19"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "외국인 및 외국인가구에 대해 자세히 설명해 주시면 감사하겠습니다.",
+      "gold_page_id": "public_pdf/prism/2024년 인천광역시 다문화, 외국인 가구통계보고서_125",
+      "expect_answer": true,
+      "sample_id": "J20"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "2022년 동구 성인지 통계에서 남녀 복지 비율은多少% 입니까?",
+      "gold_page_id": "public_pdf/prism/230628 2022 동구 성인지 통계_405",
+      "expect_answer": true,
+      "sample_id": "J21"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "표지와 동일한 면지의 사용에 대한 설명은 어디서 확인할 수 있을까요?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나_130402)2013+나로호+성공+이후,+우주강국+도약을+위한+전략+심포지엄_1",
+      "expect_answer": true,
+      "sample_id": "J22"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "\"2023년 미중관계의 변화와 한국의 대북정책에 대해 어떻게 다룰 계획인가요?\"",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나-100913)동북아+전략환경의+변화와+한국의+대응전략+자료집_8",
+      "expect_answer": true,
+      "sample_id": "J23"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "5.3 항목에서 특정 시설물의 이름이 어떤 것인지 확인해보세요.",
+      "gold_page_id": "public_pdf/prism/230330 제2차 세종시 자원순환시행계획 전략환경영향평가서(5M)_55",
+      "expect_answer": true,
+      "sample_id": "J24"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제제목에 2021년 업무보고서가 포함되어 있는가요?",
+      "gold_page_id": "public_pdf/prism/4. 정책연구 최종보고서_경기도 내 소규모 중학교의 과밀학급 해소를 위한 학급당 적정 학생수 연구-인제대학교 오세희 (1)_120",
+      "expect_answer": true,
+      "sample_id": "J25"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제 1 절에서 음식물폐기물 처리원가 산정기준에 대한 구체적인 내용은 무엇인가요?",
+      "gold_page_id": "public_pdf/prism/2024아랫장 웃장 폐기물 수집운반처리 원가산정_75",
+      "expect_answer": true,
+      "sample_id": "J26"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "제7장에서 제시된 첫 번째 요약 내용은 무엇입니까?",
+      "gold_page_id": "public_pdf/prism/230307_기업 직업훈련 활성화를 위한 규제혁신 방안_인쇄용_최종인쇄본_203",
+      "expect_answer": true,
+      "sample_id": "J27"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "'부록' 페이지에 어떤 내용의 문서가 포함되어 있을까요?",
+      "gold_page_id": "public_pdf/prism/20250216_제주지역 사회적 격차 실태조사 및 방향성 모색 연구_최종_551",
+      "expect_answer": true,
+      "sample_id": "J28"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "SDGs의 이행과 시민사회 역할에 대해 논의될 내용은 무엇인가요?",
+      "gold_page_id": "assembly_raw/국회입법조사처제공자료통합API/20151008_2030개발의제+시대의+지속가능발전목표자(SDGs)와+이행전략_자료집(최종)_156",
+      "expect_answer": true,
+      "sample_id": "J29"
+    },
+    {
+      "corpus": "sds",
+      "source": "synth_image_pages",
+      "type": "image",
+      "query": "2024년 독서진흥에 관한 연차보고서 제4장에서 독서진흥 캠페인에 대한 내용은 어떤 주제로 시작되는가요?",
+      "gold_page_id": "public_pdf/prism/2024 독서진흥에 관한 연차보고서(최종) (1)_209",
+      "expect_answer": true,
+      "sample_id": "J30"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "삼성전자 2023년 연결기준 매출액",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J31"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "카카오 2024년 사업보고서 임직원 수",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J32"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "현대자동차 2023년과 2024년 영업이익 비교",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J33"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "NAVER 2022 최대주주 지분율",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J34"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "LG화학 2023년 주당 배당금",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J35"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "카카오 사업보고서 정정 사유",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J36"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "삼성전자 2024 연구개발비 매출 대비 비율",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J37"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "네이버 2023년 등기임원 보수 총액",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J38"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "현대자동차 2024 사업보고서 주요 제품 매출 비중",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J39"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "LG화학 2022 주주총회 안건",
+      "expect_answer": true,
+      "gold_page_id": null,
+      "sample_id": "J40"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "카카오 2025년 상반기 매출",
+      "expect_answer": false,
+      "gold_page_id": null,
+      "sample_id": "J41"
+    },
+    {
+      "corpus": "dart",
+      "source": "manual",
+      "type": "dart",
+      "query": "삼성전자 2021년 배당 결정",
+      "expect_answer": false,
+      "gold_page_id": null,
+      "sample_id": "J42"
+    }
+  ]
+}
