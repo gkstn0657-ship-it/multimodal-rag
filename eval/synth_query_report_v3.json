@@ -2,15 +2,15 @@
   "n_queries": 185,
   "stores": {
     "v3_caption_ocr": {
-      "recall@1": 0.372972972972973,
-      "recall@3": 0.6054054054054054,
-      "recall@5": 0.6810810810810811,
-      "recall@10": 0.7243243243243244,
-      "ndcg@1": 0.372972972972973,
-      "ndcg@3": 0.5111287695173794,
-      "ndcg@5": 0.5425360833489105,
-      "ndcg@10": 0.5564346555337351,
-      "mrr": 0.5016344916344917,
+      "recall@1": 0.3675675675675676,
+      "recall@3": 0.5837837837837838,
+      "recall@5": 0.6648648648648648,
+      "recall@10": 0.7135135135135136,
+      "ndcg@1": 0.3675675675675676,
+      "ndcg@3": 0.49832298440154943,
+      "ndcg@5": 0.5320582796280717,
+      "ndcg@10": 0.547694477679137,
+      "mrr": 0.49377305877305877,
       "n": 185
     },
     "v2_caption": {
@@ -80,8 +80,8 @@
   },
   "per_query_wins": {
     "tie": 106,
-    "baseline_better": 22,
-    "ours_better": 57
+    "baseline_better": 24,
+    "ours_better": 55
   },
   "per_query_ranks": [
     {
@@ -277,7 +277,7 @@
     {
       "page_id": "public_pdf/prism/2023년 충남 공공기관(장) 경영평가 _ 결과보고서(정보공개)_743",
       "query": "충남테크노파크에 대해 어떤 역할을 수행하고 있나요?",
-      "v3_caption_ocr": 6,
+      "v3_caption_ocr": 8,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -337,7 +337,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/220620+간담회_인구구조+변화가+경제+및+재정에+미치는+영향_10",
       "query": "생애주기 모형을 통해 인구구조 변화와 거시경제와의 접점을 어떻게 분석한가요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 4,
       "v2_caption": 3,
       "v2_caption_ocr": 1,
       "v1_caption": 1,
@@ -647,7 +647,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나_110831)뉴미디어시대,_한류의_전망과_과제_자료집_129",
       "query": "한류가 경제에 미치는 영향을 어떻게 분석한 것이며, 그 결과에 따라 국가브랜드 제고 방안은 무엇인가요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 2,
       "v2_caption": 10,
       "v2_caption_ocr": 1,
       "v1_caption": null,
@@ -807,7 +807,7 @@
     {
       "page_id": "public_pdf/prism/2024년 달성습지 생태모니터링 연구용역_110",
       "query": "달성습지에 설치된 2022년 시설의 위치와 그룹이 어떻게 확정되었나요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": null,
       "v2_caption": 1,
       "v2_caption_ocr": 2,
       "v1_caption": null,
@@ -897,7 +897,7 @@
     {
       "page_id": "public_pdf/prism/2040 아산시 환경계획(최종안)_1",
       "query": "아산시 환경계획(2023-2040)에서 주요 목표들은 무엇입니까?",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 8,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -967,7 +967,7 @@
     {
       "page_id": "public_pdf/prism/20231123_최종보고서_전라남도 지역환경보건계획수립_289",
       "query": "제5장에서 제시된 SWOT 분석과 대응 전략에 대해 상세히 어떻게 설명하고 있습니다?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 4,
       "v2_caption": 8,
       "v2_caption_ocr": null,
       "v1_caption": 1,
@@ -1087,7 +1087,7 @@
     {
       "page_id": "public_pdf/prism/2023년 충남 공공기관(장) 경영평가 _ 결과보고서(정보공개)_723",
       "query": "충남신용보증재단의 주요 역할은 무엇인가요?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 4,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1117,7 +1117,7 @@
     {
       "page_id": "public_pdf/prism/[STR] 2022 응급의료 이용실태 및 만족도 조사_F_113",
       "query": "올해의 의료 이용실태와 만족도 조사 결과는 무엇인가요?",
-      "v3_caption_ocr": 5,
+      "v3_caption_ocr": 7,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1147,7 +1147,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(세미나_20150311)+분단+70년,+남북+경제교류협력+무엇을+어떻게+할+것인가_81",
       "query": "이 책에서 남북 경제교류협력을 개선하기 위한 구체적인 제안은 무엇인가?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 5,
       "v2_caption": 8,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1157,7 +1157,7 @@
     {
       "page_id": "public_pdf/생활법령/가처분 신청 _ 가처분집행 _ 가처분집행 _ 가처분집행 (본문) _ 찾기쉬운 생활법령정보_4",
       "query": "구체적인 법률에 대한 질문은 어떤 기관에 문의해야 할까요?",
-      "v3_caption_ocr": 4,
+      "v3_caption_ocr": 1,
       "v2_caption": 2,
       "v2_caption_ocr": 2,
       "v1_caption": 2,
@@ -1237,7 +1237,7 @@
     {
       "page_id": "public_pdf/prism/2022. 수원 여성폭력 실태조사 최종보고서_1",
       "query": "2022년 수원시 여성폭력 실태조사에서 가장 높은 발생 원인은 무엇인가요?",
-      "v3_caption_ocr": 9,
+      "v3_caption_ocr": null,
       "v2_caption": null,
       "v2_caption_ocr": null,
       "v1_caption": null,
@@ -1517,7 +1517,7 @@
     {
       "page_id": "public_pdf/prism/2024년 달성습지 생태모니터링 연구용역_34",
       "query": "달성습지에서 1등급 유전자보존구역인 시설 조성에 대한 연구는 필요할까요?",
-      "v3_caption_ocr": 9,
+      "v3_caption_ocr": 8,
       "v2_caption": 9,
       "v2_caption_ocr": 4,
       "v1_caption": 5,
@@ -1537,7 +1537,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/(간담회_131108)국가+SOC계정+개발의+필요성+및+활용방안-도로·철도+부문을+중심으로_자료집_1",
       "query": "2013년 도로 및 철도 부문 SOC 계정에 대한 분석과 시사점에 대해 설명해주세요.",
-      "v3_caption_ocr": 1,
+      "v3_caption_ocr": 2,
       "v2_caption": 3,
       "v2_caption_ocr": 3,
       "v1_caption": null,
@@ -1637,7 +1637,7 @@
     {
       "page_id": "assembly_raw/국회입법조사처제공자료통합API/10-11.지자체의_학교용지부담금_미지급_사태의_해결_방안_60",
       "query": "지자체의 학교용지부담금 미지급 사태를 어떻게 극복하는가요?",
-      "v3_caption_ocr": 1,
+      "v3_caption_ocr": 3,
       "v2_caption": 1,
       "v2_caption_ocr": 1,
       "v1_caption": null,
@@ -1657,7 +1657,7 @@
     {
       "page_id": "public_pdf/prism/[보고서] 제5차 울산광역시 정보화 기본계획_보고서_1",
       "query": "제5차 울산광역시 정보화 기본계획의 편성 계획은 언제부터 언제까지 진행될까요?",
-      "v3_caption_ocr": 3,
+      "v3_caption_ocr": 2,
       "v2_caption": 5,
       "v2_caption_ocr": 3,
       "v1_caption": 2,
@@ -1907,7 +1907,7 @@
     {
       "page_id": "public_pdf/prism/20221201 중장기_식품산업_진흥정책_방안마련_연구_송부용__280",
       "query": "제4차 중장기 식품산업 진흥정책 마련을 위한 식품업체, 전문가 및 정책담당자 간담회 회의록에 대한 내용이 어떤 부분에 대한지 알려주세요?",
-      "v3_caption_ocr": 2,
+      "v3_caption_ocr": 3,
       "v2_caption": 2,
       "v2_caption_ocr": 3,
       "v1_caption": 4,

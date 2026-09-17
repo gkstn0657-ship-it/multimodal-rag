@@ -115,14 +115,14 @@
     "dart_dense": {
       "all": {
         "n": 10,
-        "ndcg@5": 0.6382139316426572,
+        "ndcg@5": 0.6238849947760579,
         "recall@5": 0.3,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
       },
       "dart/dart": {
         "n": 10,
-        "ndcg@5": 0.6382139316426572,
+        "ndcg@5": 0.6238849947760579,
         "recall@5": 0.3,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
@@ -131,15 +131,31 @@
     "dart_hybrid": {
       "all": {
         "n": 10,
-        "ndcg@5": 0.8421372098023563,
+        "ndcg@5": 0.8306538198645617,
         "recall@5": 0.4,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
       },
       "dart/dart": {
         "n": 10,
-        "ndcg@5": 0.8421372098023563,
+        "ndcg@5": 0.8306538198645617,
         "recall@5": 0.4,
+        "irrelevant@5": 0.62,
+        "gold_in_top5": null
+      }
+    },
+    "dart_prefix": {
+      "all": {
+        "n": 10,
+        "ndcg@5": 0.8517463893760209,
+        "recall@5": 0.5,
+        "irrelevant@5": 0.62,
+        "gold_in_top5": null
+      },
+      "dart/dart": {
+        "n": 10,
+        "ndcg@5": 0.8517463893760209,
+        "recall@5": 0.5,
         "irrelevant@5": 0.62,
         "gold_in_top5": null
       }
@@ -151,6 +167,10 @@
       "false_positive": 1
     },
     "dart_hybrid": {
+      "n": 2,
+      "false_positive": 1
+    },
+    "dart_prefix": {
       "n": 2,
       "false_positive": 1
     }

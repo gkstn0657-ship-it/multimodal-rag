@@ -123,9 +123,22 @@ class BM25Index:
         return (store_dir / "bm25.npz").exists() and (store_dir / "bm25_vocab.json").exists()
 
 
-def build_for_store(store_dir: Path) -> BM25Index:
-    """벡터 저장소의 meta.jsonl 문서 텍스트로 BM25 인덱스를 만들어 같은 디렉터리에 저장한다."""
-    docs = [json.loads(l)["document"] for l in (store_dir / "meta.jsonl").open(encoding="utf-8")]
+def build_for_store(store_dir: Path, use_prefix: bool = False) -> BM25Index:
+    """벡터 저장소의 meta.jsonl 문서 텍스트로 BM25 인덱스를 만들어 같은 디렉터리에 저장한다.
+
+    use_prefix=True면 D-21의 문서명/회사·사업연도 접두어를 토큰화 대상 텍스트 앞에 붙인다.
+    임베딩 텍스트(meta.jsonl의 document, 답변에 그대로 쓰임)는 바꾸지 않는다 — BM25 색인에만 반영.
+    """
+    from indexing.doc_prefix import load_dart_manifest, prefix_for
+
+    manifest = load_dart_manifest(Path("data/dart/manifest.jsonl")) if use_prefix else {}
+    docs = []
+    for line in (store_dir / "meta.jsonl").open(encoding="utf-8"):
+        rec = json.loads(line)
+        if use_prefix:
+            docs.append(f"{prefix_for(rec['id'], manifest)}\n{rec['document']}")
+        else:
+            docs.append(rec["document"])
     index = BM25Index.build(docs)
     index.save(store_dir)
     return index
@@ -137,8 +150,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("store_dirs", nargs="+")
+    parser.add_argument("--prefix", action="store_true", help="D-21: 문서명/회사·사업연도 접두어를 BM25 색인에 포함")
     args = parser.parse_args()
     for d in args.store_dirs:
         t0 = time.time()
-        idx = build_for_store(Path(d))
+        idx = build_for_store(Path(d), use_prefix=args.prefix)
         print(f"{d}: 문서 {idx.n_docs:,} / 어휘 {len(idx.vocab):,} / 포스팅 {len(idx.doc_idx):,} / {time.time() - t0:.1f}초")
